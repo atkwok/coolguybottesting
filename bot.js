@@ -25,8 +25,8 @@ function postMessage() {
 
   botResponse = cool();
   bibleverses.retrievePassage('Romans 2:3-4')
-    .then(response => response = response.json())
-    .then(response => verseResponse = response);
+    .then(response => response.json())
+    .then(data => verseResponse = data);
 
   options = {
     hostname: 'api.groupme.com',
