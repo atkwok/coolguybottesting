@@ -3,7 +3,7 @@ var cool = require('cool-ascii-faces');
 
 var botID = process.env.BOT_ID;
 var crosswayAPIToken = process.env.CROSSWAY_API_TOKEN;
-var ESV_API_URL = "https://api.esv.org/v3/passage/text/"
+var ESV_API_URL = "https://api.esv.org/v3/passage/text/";
 
 function respond() {
   var request = JSON.parse(this.req.chunks[0]),
