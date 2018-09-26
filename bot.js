@@ -22,6 +22,7 @@ function respond() {
 
 function getESVpassage(passage) {
   var returnVerse; 
+  console.log(crosswayAPIToken);
 
   options = {
     hostname: 'api.esv.org',
