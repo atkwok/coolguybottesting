@@ -27,7 +27,7 @@ function getESVpassage(passage) {
   options = {
     hostname: 'api.esv.org',
     path: '/v3/passage/text/',
-    method: 'POST',
+    method: 'GET',
     headers: {
      'Authorization': 'Token ' + crosswayAPIToken
     },
