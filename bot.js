@@ -46,6 +46,7 @@ function getESVpassage(passage) {
         //success
       } else {
         console.log('rejecting bad status lol code ' + res.statusCode);
+        console.log(res);
       }
   });
 
