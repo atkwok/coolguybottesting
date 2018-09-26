@@ -25,8 +25,8 @@ function postMessage() {
 
   botResponse = cool();
   bibleverses.retrievePassage('Romans 2:3-4')
-    .then(response => response.json())
-    .then(data => verseResponse = data);
+    .then(response => verseResponse = response);
+    // .then(data => );
 
   options = {
     hostname: 'api.groupme.com',
@@ -36,7 +36,7 @@ function postMessage() {
 
   body = {
     "bot_id" : botID,
-    "text" : JSON.stringify(verseResponse) + botResponse
+    "text" : verseResponse + botResponse
   };
 
   console.log('sending ' + botResponse + ' to ' + botID);
