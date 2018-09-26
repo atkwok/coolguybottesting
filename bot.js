@@ -24,17 +24,21 @@ function getESVpassage(passage) {
   var returnVerse; 
 
   options = {
-    'q': passage,
-    'include-headings': false,
-    'include-footnotes': false,
-    'include-verse-numbers': false,
-    'include-short-copyright': false,
-    'include-passage-references': false
-  }
-
-  headers = {
-    'Authorization': 'Token ' + crosswayAPIToken
-  }
+    hostname: 'api.esv.org',
+    path: '/v3/passage/text/',
+    method: 'get',
+    headers: {
+     'Authorization': 'Token ' + crosswayAPIToken
+    },
+    body: {
+      'q': passage,
+      'include-headings': false,
+      'include-footnotes': false,
+      'include-verse-numbers': false,
+      'include-short-copyright': false,
+      'include-passage-references': false
+    }
+  };
 
   ESVreq = HTTPS.request(options, function(res) {
       if(res.statusCode >= 200 && res.statusCode < 300) {
