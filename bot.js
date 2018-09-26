@@ -23,7 +23,7 @@ function postMessage() {
   var botResponse, options, body, botReq;
   var verseResponse;
 
-  // botResponse = cool();
+  botResponse = cool();
   bibleverses.retrievePassage('Romans 2:3-4')
     .then(response => response.json())
     .then(data => verseResponse = data);
@@ -36,7 +36,7 @@ function postMessage() {
 
   body = {
     "bot_id" : botID,
-    "text" : verseResponse
+    "text" : JSON.stringify(verseResponse) + botResponse
   };
 
   console.log('sending ' + botResponse + ' to ' + botID);
