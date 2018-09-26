@@ -26,7 +26,7 @@ function getESVpassage(passage) {
   options = {
     hostname: 'api.esv.org',
     path: '/v3/passage/text/',
-    method: 'get',
+    method: 'POST',
     headers: {
      'Authorization': 'Token ' + crosswayAPIToken
     },
@@ -56,6 +56,7 @@ function getESVpassage(passage) {
   });
   ESVreq.on('data', function(data) {
     returnVerse = JSON.stringify(body);
+    console.log(returnVerse);
   });
   ESVreq.end();
   return returnVerse;
