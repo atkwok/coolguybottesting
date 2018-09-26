@@ -1,9 +1,9 @@
 var HTTPS = require('https');
 var cool = require('cool-ascii-faces');
-var GetBible = require('getbible');
-var bibleAPI = new GetBible();
 
 var botID = process.env.BOT_ID;
+var crosswayAPIToken = process.env.CROSSWAY_API_TOKEN;
+var ESV_API_URL = "https://api.esv.org/v3/passage/text/"
 
 function respond() {
   var request = JSON.parse(this.req.chunks[0]),
@@ -20,12 +20,48 @@ function respond() {
   }
 }
 
+function getESVpassage(passage) {
+  var returnVerse; 
+
+  options = {
+    'q': passage,
+    'include-headings': false,
+    'include-footnotes': false,
+    'include-verse-numbers': false,
+    'include-short-copyright': false,
+    'include-passage-references': false
+  }
+
+  headers = {
+    'Authorization': 'Token ' + crosswayAPIToken
+  }
+
+  ESVreq = HTTPS.request(options, function(res) {
+      if(res.statusCode >= 200 && res.statusCode < 300) {
+        //success
+      } else {
+        console.log('rejecting bad status code ' + res.statusCode);
+      }
+  });
+
+  ESVreq.on('error', function(err) {
+    console.log('error posting message '  + JSON.stringify(err));
+  });
+  ESVreq.on('timeout', function(err) {
+    console.log('timeout posting message '  + JSON.stringify(err));
+  });
+  ESVreq.on('data', function(data) {
+    returnVerse = JSON.stringify(body)
+  });
+  ESVreq.end();
+}
+
 function postMessage() {
   var botResponse, options, body, botReq;
   var verseResponse;
 
   botResponse = cool();
-  verseResponse = bibleAPI.getPassage('Romans 2:3-4');
+  verseResponse = getESVpassage('Romans 2:3-4');
 
   options = {
     hostname: 'api.groupme.com',
