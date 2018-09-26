@@ -45,7 +45,7 @@ function getESVpassage(passage) {
       if(res.statusCode >= 200 && res.statusCode < 300) {
         //success
       } else {
-        console.log('rejecting bad status code ' + res.statusCode);
+        console.log('rejecting bad status lol code ' + res.statusCode);
       }
   });
 
