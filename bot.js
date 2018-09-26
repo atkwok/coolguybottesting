@@ -1,5 +1,6 @@
 var HTTPS = require('https');
 var cool = require('cool-ascii-faces');
+const bibleverses = require('bibleverses');
 
 var botID = process.env.BOT_ID;
 
@@ -20,8 +21,12 @@ function respond() {
 
 function postMessage() {
   var botResponse, options, body, botReq;
+  var verseResponse;
 
-  botResponse = cool();
+  // botResponse = cool();
+  bibleverses.retrievePassage('Romans 2:3-4')
+    .then(response => response.json())
+    .then(data => verseResponse = data);
 
   options = {
     hostname: 'api.groupme.com',
@@ -31,7 +36,7 @@ function postMessage() {
 
   body = {
     "bot_id" : botID,
-    "text" : botResponse
+    "text" : verseResponse
   };
 
   console.log('sending ' + botResponse + ' to ' + botID);
