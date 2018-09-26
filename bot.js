@@ -1,6 +1,6 @@
 var HTTPS = require('https');
 var cool = require('cool-ascii-faces');
-const bibleverses = require('bibleverses');
+var bibleverses = require('bibleverses');
 
 var botID = process.env.BOT_ID;
 
@@ -24,8 +24,8 @@ function postMessage() {
   var verseResponse;
 
   botResponse = cool();
-  bibleverses.retrievePassage('Romans 2:3-4')
-    .then(response => verseResponse = response);
+  // bibleverses.retrievePassage('Romans 2:3-4')
+  //   .then(response => verseResponse = response);
     // .then(data => );
 
   options = {
@@ -36,7 +36,8 @@ function postMessage() {
 
   body = {
     "bot_id" : botID,
-    "text" : verseResponse + botResponse
+    // "text" : verseResponse + botResponse
+    "text": botResponse
   };
 
   console.log('sending ' + botResponse + ' to ' + botID);
