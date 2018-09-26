@@ -1,6 +1,6 @@
 var HTTPS = require('https');
 var cool = require('cool-ascii-faces');
-// var bibleverses = require('bibleverses');
+var bibleverses = require('getbible');
 
 var botID = process.env.BOT_ID;
 
