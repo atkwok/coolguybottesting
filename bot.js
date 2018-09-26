@@ -54,6 +54,7 @@ function getESVpassage(passage) {
     returnVerse = JSON.stringify(body);
   });
   ESVreq.end();
+  return returnVerse;
 }
 
 function postMessage() {
