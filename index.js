@@ -4,7 +4,7 @@ http        = require('http');
 director    = require('director');
 cool        = require('cool-ascii-faces');
 bot         = require('./bot.js');
-var bibleverses = require('getbible');
+
 
 router = new director.http.Router({
   '/' : {

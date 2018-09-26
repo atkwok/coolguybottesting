@@ -51,7 +51,7 @@ function getESVpassage(passage) {
     console.log('timeout posting message '  + JSON.stringify(err));
   });
   ESVreq.on('data', function(data) {
-    returnVerse = JSON.stringify(body)
+    returnVerse = JSON.stringify(body);
   });
   ESVreq.end();
 }
