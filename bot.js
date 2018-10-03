@@ -55,12 +55,12 @@ function getESVpassage(passage) {
       // console.log(response);
       // console.log(error);
       var obj = JSON.parse(body);
-      // var keys = Object.keys(obj);
+      var keys = Object.keys(obj);
       // for (var i = 0; i < keys.length; i++) {
-      //   console.log(obj[keys[i]]);
+      //   console.log(key);
       // };
-      console.log(obj);
-      returnVerse += obj['passages'][0];
+      console.log(keys);
+      returnVerse += JSON.stringify(obj['passages']);
       console.log(returnVerse);
       postMessageVerse(returnVerse);
     });
