@@ -54,15 +54,17 @@ function getESVpassage(passage) {
       // console.log(body);
       // console.log(response);
       // console.log(error);
-      var obj = JSON.parse(body);
-      var keys = Object.keys(obj);
-      // for (var i = 0; i < keys.length; i++) {
-      //   console.log(key);
-      // };
-      console.log(keys);
-      returnVerse += JSON.stringify(obj.passages);
-      console.log(returnVerse);
-      postMessageVerse(returnVerse);
+      if (!error && response.statusCode == 200) {
+        var obj = JSON.parse(body);
+        var keys = Object.keys(obj);
+        // for (var i = 0; i < keys.length; i++) {
+        //   console.log(key);
+        // };
+        console.log(keys);
+        returnVerse += JSON.stringify(obj.passages);
+        console.log(returnVerse);
+        postMessageVerse(returnVerse);
+      };
     });
 
   // ESVreq = HTTPS.request(options, function(res) {
