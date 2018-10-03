@@ -61,7 +61,7 @@ function getESVpassage(passage) {
       // };
       conole.log(obj);
       returnVerse += obj['passages'][0];
-      console..log(returnVerse);
+      console.log(returnVerse);
     });
 
   // ESVreq = HTTPS.request(options, function(res) {
