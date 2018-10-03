@@ -34,9 +34,11 @@ function getESVpassage(passage) {
   };
 
   var url = '/v3/passage/text/';
-  url += Object.keys(data).map(function(k) {
-    return encodeURIComponent(k) + '=' + encodeURIComponent(data[k])
+  url += Object.keys(body).map(function(k) {
+    return encodeURIComponent(k) + '=' + encodeURIComponent(body[k])
   }).join('&');
+
+  console.log(url);
 
   options = {
     hostname: 'api.esv.org',
@@ -55,7 +57,7 @@ function getESVpassage(passage) {
       }
   });
 
-  console.log(ESVreq);
+  // console.log(ESVreq);
 
   ESVreq.on('error', function(err) {
     console.log('error posting message '  + JSON.stringify(err));
