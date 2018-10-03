@@ -81,6 +81,7 @@ function postMessage() {
 
   botResponse = cool();
   verseResponse = getESVpassage('Romans 2:3-4');
+  console.log(verseResponse);
 
   options = {
     hostname: 'api.groupme.com',
