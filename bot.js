@@ -33,7 +33,7 @@ function getESVpassage(passage) {
     'include-passage-references': false
   };
 
-  var url = '/v3/passage/text/';
+  var url = '/v3/passage/text/?';
   url += Object.keys(body).map(function(k) {
     return encodeURIComponent(k) + '=' + encodeURIComponent(body[k])
   }).join('&');
@@ -58,6 +58,8 @@ function getESVpassage(passage) {
   });
 
   // console.log(ESVreq);
+  // curl -H 'Authorization: Token {{ YOUR_KEY }}' 'https://api.esv.org/v3/passage/text/?q=John+11:35'
+  //v3/passage/text/q=Romans%202%3A3-4&include-headings=false&include-footnotes=false&include-verse-numbers=false&include-short-copyright=false&include-passage-references=false
 
   ESVreq.on('error', function(err) {
     console.log('error posting message '  + JSON.stringify(err));
