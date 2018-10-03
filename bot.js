@@ -59,7 +59,7 @@ function getESVpassage(passage) {
       // for (var i = 0; i < keys.length; i++) {
       //   console.log(obj[keys[i]]);
       // };
-      conole.log(obj);
+      console.log(obj);
       returnVerse += obj['passages'][0];
       console.log(returnVerse);
     });
