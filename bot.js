@@ -8,7 +8,7 @@ var ESV_API_URL = "https://api.esv.org/v3/passage/text/";
 
 function respond() {
   var request = JSON.parse(this.req.chunks[0]),
-      botRegex = /^\/cool guy.*/;
+      botRegex = /^\/verse.*/;
 
   if(request.text && botRegex.test(request.text)) {
     this.res.writeHead(200);
@@ -61,7 +61,7 @@ function getESVpassage(passage) {
         //   console.log(key);
         // };
         console.log(keys);
-        returnVerse += JSON.stringify(obj.passages);
+        returnVerse += obj.passages[0];
         console.log(returnVerse);
         postMessageVerse(returnVerse);
       };
@@ -103,7 +103,7 @@ function postMessageVerse(passagetext) {
   var botResponse, options, body, botReq;
   var verseResponse = passagetext;
 
-  botResponse = cool();
+  botResponse = "";
   // verseResponse = getESVpassage('Romans 2:3-4');
   console.log(verseResponse);
 
