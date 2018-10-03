@@ -63,7 +63,7 @@ function getESVpassage(passage) {
         console.log(keys);
         returnVerse += obj.passages.join();
         console.log(returnVerse);
-        postMessageVerse(returnVerse);
+        postMessageVerse(returnVerse + passage);
       } else {
         postMessageError("Error with verse " + passage);
       };
