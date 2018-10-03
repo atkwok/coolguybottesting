@@ -104,7 +104,7 @@ function postMessageVerse(passagetext) {
   var verseResponse;
 
   botResponse = cool();
-  verseResponse = getESVpassage('Romans 2:3-4');
+  // verseResponse = getESVpassage('Romans 2:3-4');
   console.log(verseResponse);
 
   options = {
