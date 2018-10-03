@@ -21,7 +21,7 @@ function respond() {
   }
 }
 
-function getESVpassage(passage,) {
+function getESVpassage(passage) {
   returnVerse = ""; 
   console.log(crosswayAPIToken);
 
