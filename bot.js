@@ -49,7 +49,7 @@ function getESVpassage(passage) {
     qs: body,
   };
 
-  request("https://api.esv.org", function(error, response, body) {
+  request("https://api.esv.org/passage/text/", function(error, response, body) {
       returnVerse += body;
       // console.log(body);
       // console.log(response);
