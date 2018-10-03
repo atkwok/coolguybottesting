@@ -51,6 +51,9 @@ function getESVpassage(passage) {
 
   request("https://api.esv.org", function(error, response, body) {
       returnVerse += body;
+      console.log(body);
+      console.log(response);
+      console.log(error);
     })
 
   // ESVreq = HTTPS.request(options, function(res) {
