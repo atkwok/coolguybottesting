@@ -7,7 +7,7 @@ var ESV_API_URL = "https://api.esv.org/v3/passage/text/";
 
 function respond() {
   var request = JSON.parse(this.req.chunks[0]),
-      botRegex = /^\/cool guy$/;
+      botRegex = /^\/cool guy.*/;
 
   if(request.text && botRegex.test(request.text)) {
     this.res.writeHead(200);
@@ -24,20 +24,26 @@ function getESVpassage(passage) {
   var returnVerse; 
   console.log(crosswayAPIToken);
 
+  body = body: {
+    'q': passage,
+    'include-headings': false,
+    'include-footnotes': false,
+    'include-verse-numbers': false,
+    'include-short-copyright': false,
+    'include-passage-references': false
+  };
+
+  var url = '/v3/passage/text/';
+  url += Object.keys(data).map(function(k) {
+    return encodeURIComponent(k) + '=' + encodeURIComponent(data[k])
+  }).join('&');
+
   options = {
     hostname: 'api.esv.org',
-    path: '/v3/passage/text/',
+    path: url,
     headers: {
      'Authorization': 'Token ' + crosswayAPIToken
     },
-    body: {
-      'q': passage,
-      'include-headings': false,
-      'include-footnotes': false,
-      'include-verse-numbers': false,
-      'include-short-copyright': false,
-      'include-passage-references': false
-    }
   };
 
   ESVreq = HTTPS.request(options, function(res) {
@@ -48,6 +54,8 @@ function getESVpassage(passage) {
         console.log(res);
       }
   });
+
+  console.log(ESVreq);
 
   ESVreq.on('error', function(err) {
     console.log('error posting message '  + JSON.stringify(err));
