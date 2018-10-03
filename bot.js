@@ -51,6 +51,20 @@ function getESVpassage(passage) {
   ESVreq = HTTPS.request(options, function(res) {
       if(res.statusCode >= 200 && res.statusCode < 300) {
         //success
+        ESVreq.on('error', function(err) {
+          console.log('error posting message '  + JSON.stringify(err));
+        });
+        ESVreq.on('timeout', function(err) {
+          console.log('timeout posting message '  + JSON.stringify(err));
+        });
+        ESVreq.on('data', function(data) {
+          returnVerse += data;
+          console.log(returnVerse);
+        });
+        ESVreq.on('end', function() {
+          console.log(returnVerse);
+        });
+        ESVreq.end();
       } else {
         console.log('rejecting bad status lol code ' + res.statusCode);
         console.log(res);
@@ -61,20 +75,7 @@ function getESVpassage(passage) {
   // curl -H 'Authorization: Token {{ YOUR_KEY }}' 'https://api.esv.org/v3/passage/text/?q=John+11:35'
   //v3/passage/text/q=Romans%202%3A3-4&include-headings=false&include-footnotes=false&include-verse-numbers=false&include-short-copyright=false&include-passage-references=false
 
-  ESVreq.on('error', function(err) {
-    console.log('error posting message '  + JSON.stringify(err));
-  });
-  ESVreq.on('timeout', function(err) {
-    console.log('timeout posting message '  + JSON.stringify(err));
-  });
-  ESVreq.on('data', function(data) {
-    returnVerse += data;
-    console.log(returnVerse);
-  });
-  ESVreq.on('end', function() {
-    console.log(returnVerse);
-  });
-  ESVreq.end();
+  
   return returnVerse;
 }
 
