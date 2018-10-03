@@ -101,7 +101,7 @@ function getESVpassage(passage) {
 
 function postMessageVerse(passagetext) {
   var botResponse, options, body, botReq;
-  var verseResponse;
+  var verseResponse = passagetext;
 
   botResponse = cool();
   // verseResponse = getESVpassage('Romans 2:3-4');
