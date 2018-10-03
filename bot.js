@@ -62,7 +62,7 @@ function getESVpassage(passage) {
       conole.log(obj);
       returnVerse += obj['passages'][0];
       console..log(returnVerse);
-    })
+    });
 
   // ESVreq = HTTPS.request(options, function(res) {
   //     if(res.statusCode >= 200 && res.statusCode < 300) {
