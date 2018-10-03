@@ -22,7 +22,7 @@ function respond() {
 }
 
 function getESVpassage(passage) {
-  var returnVerse = ""; 
+  returnVerse = ""; 
   console.log(crosswayAPIToken);
 
   body = {
