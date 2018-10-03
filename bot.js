@@ -8,11 +8,11 @@ var ESV_API_URL = "https://api.esv.org/v3/passage/text/";
 
 function respond() {
   var request = JSON.parse(this.req.chunks[0]),
-      botRegex = /^\/verse.*/;
+      verseRegex = /^\/verse.*$/;
 
-  if(request.text && botRegex.test(request.text)) {
+  if(request.text && verseRegex.test(request.text)) {
     this.res.writeHead(200);
-    getESVpassage('Romans 2:3-4');
+    getESVpassage(request.text.substr(6));
     this.res.end();
   } else {
     console.log("don't care");
@@ -61,9 +61,11 @@ function getESVpassage(passage) {
         //   console.log(key);
         // };
         console.log(keys);
-        returnVerse += obj.passages[0];
+        returnVerse += obj.passages.join();
         console.log(returnVerse);
         postMessageVerse(returnVerse);
+      } else {
+        postMessageVerse("Error with verse " + passage);
       };
     });
 
