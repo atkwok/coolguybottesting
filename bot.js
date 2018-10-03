@@ -65,7 +65,9 @@ function getESVpassage(passage) {
         returnVerse += passage;
         console.log(returnVerse);
         for (var i = 0; i <= returnVerse / 1000; i++) {
-          postMessageVerse(returnVerse.substr(i * 1000, i * 1000 + 1000));
+          thing = returnVerse.substr(i * 1000, i * 1000 + 1000);
+          console.log(thing);
+          postMessageVerse(thing);
         };
       } else {
         postMessageError("Error with verse " + passage);
