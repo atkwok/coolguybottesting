@@ -1,5 +1,6 @@
 var HTTPS = require('https');
 var cool = require('cool-ascii-faces');
+const request = require('request');
 
 var botID = process.env.BOT_ID;
 var crosswayAPIToken = process.env.CROSSWAY_API_TOKEN;
@@ -41,36 +42,40 @@ function getESVpassage(passage) {
   console.log(url);
 
   options = {
-    hostname: 'api.esv.org',
-    path: url,
+    url: 'https://api.esv.org/v3/passage/text/',
     headers: {
      'Authorization': 'Token ' + crosswayAPIToken
     },
+    qs: body,
   };
 
-  ESVreq = HTTPS.request(options, function(res) {
-      if(res.statusCode >= 200 && res.statusCode < 300) {
-        //success
-        res.on('error', function(err) {
-          console.log('error posting message '  + JSON.stringify(err));
-        });
-        res.on('timeout', function(err) {
-          console.log('timeout posting message '  + JSON.stringify(err));
-        });
-        res.on('data', function(data) {
-          returnVerse += data;
-          console.log(returnVerse);
-        });
-        res.on('end', function() {
-          console.log(returnVerse);
-        });
-        res.end();
-      } else {
-        console.log('rejecting bad status lol code ' + res.statusCode);
-        console.log(res);
-      }
-      console.log(res.statusCode);
-  });
+  request("https://api.esv.org", function(error, response, body) {
+      returnVerse += body;
+    })
+
+  // ESVreq = HTTPS.request(options, function(res) {
+  //     if(res.statusCode >= 200 && res.statusCode < 300) {
+  //       //success
+  //       res.on('error', function(err) {
+  //         console.log('error posting message '  + JSON.stringify(err));
+  //       });
+  //       res.on('timeout', function(err) {
+  //         console.log('timeout posting message '  + JSON.stringify(err));
+  //       });
+  //       res.on('data', function(data) {
+  //         returnVerse += data;
+  //         console.log(returnVerse);
+  //       });
+  //       res.on('end', function() {
+  //         console.log(returnVerse);
+  //       });
+  //       res.end();
+  //     } else {
+  //       console.log('rejecting bad status lol code ' + res.statusCode);
+  //       console.log(res);
+  //     }
+  //     console.log(res.statusCode);
+  // });
 
   // console.log(ESVreq);
   // curl -H 'Authorization: Token {{ YOUR_KEY }}' 'https://api.esv.org/v3/passage/text/?q=John+11:35'
