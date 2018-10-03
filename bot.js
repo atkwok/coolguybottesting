@@ -54,7 +54,7 @@ function getESVpassage(passage) {
       // console.log(body);
       // console.log(response);
       // console.log(error);
-      // var obj = JSON.parse(body);
+      var obj = JSON.parse(body);
       // var keys = Object.keys(obj);
       // for (var i = 0; i < keys.length; i++) {
       //   console.log(obj[keys[i]]);
