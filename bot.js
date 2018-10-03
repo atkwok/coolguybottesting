@@ -24,7 +24,7 @@ function getESVpassage(passage) {
   var returnVerse; 
   console.log(crosswayAPIToken);
 
-  body = body: {
+  body = {
     'q': passage,
     'include-headings': false,
     'include-footnotes': false,
