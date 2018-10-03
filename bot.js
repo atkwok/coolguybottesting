@@ -60,7 +60,7 @@ function getESVpassage(passage) {
       //   console.log(key);
       // };
       console.log(keys);
-      returnVerse += JSON.stringify(obj['passages']);
+      returnVerse += JSON.stringify(obj['passages'][0]);
       console.log(returnVerse);
       postMessageVerse(returnVerse);
     });
