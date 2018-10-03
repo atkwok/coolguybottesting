@@ -51,24 +51,25 @@ function getESVpassage(passage) {
   ESVreq = HTTPS.request(options, function(res) {
       if(res.statusCode >= 200 && res.statusCode < 300) {
         //success
-        ESVreq.on('error', function(err) {
+        res.on('error', function(err) {
           console.log('error posting message '  + JSON.stringify(err));
         });
-        ESVreq.on('timeout', function(err) {
+        res.on('timeout', function(err) {
           console.log('timeout posting message '  + JSON.stringify(err));
         });
-        ESVreq.on('data', function(data) {
+        res.on('data', function(data) {
           returnVerse += data;
           console.log(returnVerse);
         });
-        ESVreq.on('end', function() {
+        res.on('end', function() {
           console.log(returnVerse);
         });
-        ESVreq.end();
+        res.end();
       } else {
         console.log('rejecting bad status lol code ' + res.statusCode);
         console.log(res);
       }
+      console.log(res.statusCode);
   });
 
   // console.log(ESVreq);
