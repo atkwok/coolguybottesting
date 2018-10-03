@@ -21,7 +21,7 @@ function respond() {
 }
 
 function getESVpassage(passage) {
-  var returnVerse; 
+  var returnVerse = ""; 
   console.log(crosswayAPIToken);
 
   body = {
@@ -68,7 +68,10 @@ function getESVpassage(passage) {
     console.log('timeout posting message '  + JSON.stringify(err));
   });
   ESVreq.on('data', function(data) {
-    returnVerse = JSON.stringify(body);
+    returnVerse += data;
+    console.log(returnVerse);
+  });
+  ESVreq.on('end', function() {
     console.log(returnVerse);
   });
   ESVreq.end();
