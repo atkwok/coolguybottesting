@@ -42,9 +42,9 @@ function getDTpassage() {
   request(options, function(error, response, body) {
 
       if (!error && response.statusCode == 200) {
-        console.log(body);
+        // console.log(body);
         passage = body.search(passageRegex)
-        console.log(passage)
+        console.log(passage[1])
       } else {
         console.log(error)
         postMessageErr("Error with verse " + passage);
