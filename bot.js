@@ -37,12 +37,14 @@ function getDTpassage() {
   var options = {
     url: 'http://gracepoint-berkeley-devotions.org/daily-devotion-text/'
   };
+  var passageRegex = /2018-10-08(?:.|\n)*?Bible Text.*>(.*?)\(ESV\)/mi
 
   request(options, function(error, response, body) {
 
       if (!error && response.statusCode == 200) {
-        var obj = JSON.parse(body);
-        console.log(obj);
+        console.log(body);
+        passage = body.search(passageRegex)
+        console.log(passage)
       } else {
         console.log(error)
         postMessageErr("Error with verse " + passage);
