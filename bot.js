@@ -44,7 +44,7 @@ function getDTpassage() {
       if (!error && response.statusCode == 200) {
         // console.log(body);
         console.log(typeof body)
-        console.log(body.substr(100))
+        // console.log(body.substr(100))
         passage = body.search(passageRegex)
         console.log(passage[1])
         console.log(passage.length)
