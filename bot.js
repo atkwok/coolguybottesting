@@ -45,9 +45,10 @@ function getDTpassage() {
         // console.log(body);
         passage = body.search(passageRegex)
         console.log(passage[1])
+        console.log(passage.length)
       } else {
         console.log(error)
-        postMessageErr("Error with verse " + passage);
+        postMessageErr("Error with curl" + passage);
       };
     });
 
