@@ -37,14 +37,14 @@ function getDTpassage() {
   var options = {
     url: 'http://gracepoint-berkeley-devotions.org/daily-devotion-text/'
   };
-  var passageRegex = /2018-10-08(?:.|\n)*?Bible Text.*>(.*?)\(ESV\)/i
+  // var passageRegex = /2018-10-08(?:.|\n)*?Bible Text.*>(.*?)\(ESV\)/i
+  var passageRegex = /2018-10-08/i
 
   request(options, function(error, response, body) {
 
       if (!error && response.statusCode == 200) {
         // console.log(body);
         console.log(typeof body)
-        // console.log(body.substr(100))
         passage = body.search(passageRegex)
         console.log(passage[1])
         console.log(passage.length)
