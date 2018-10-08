@@ -44,7 +44,8 @@ function getDTpassage() {
         var obj = JSON.parse(body);
         console.log(obj);
       } else {
-        postMessageError("Error with verse " + passage);
+        console.log(error)
+        postMessageErr("Error with verse " + passage);
       };
     });
 
@@ -87,7 +88,7 @@ function getDTpassage() {
           postMessageVerse(thing);
         }
       } else {
-        postMessageError("Error with verse " + passage);
+        postMessageErr("Error with verse " + passage);
       };
     });
 
@@ -144,7 +145,7 @@ function getESVpassage(passage) {
           postMessageVerse(thing);
         }
       } else {
-        postMessageError("Error with verse " + passage);
+        postMessageErr("Error with verse " + passage);
       };
     });
 
