@@ -8,17 +8,91 @@ var ESV_API_URL = "https://api.esv.org/v3/passage/text/";
 
 function respond() {
   var request = JSON.parse(this.req.chunks[0]),
-      verseRegex = /^\/verse.*$/;
+      verseRegex = /^\/verse.*$/,
+      dtRegex = /^\/dt\s?$/;
 
-  if(request.text && verseRegex.test(request.text)) {
+
+  if(request.text) {
+   if (verseRegex.test(request.text)) {
     this.res.writeHead(200);
     getESVpassage(request.text.substr(6));
-    this.res.end();
+     this.res.end();
+   } else if (dtRegex.test(request.text)){
+    this.res.writeHead(200);
+    getDTpassage();
+     this.res.end();
+   }
   } else {
     console.log("don't care");
     this.res.writeHead(200);
     this.res.end();
   }
+}
+
+function getDTpassage() {
+  returnVerse = ""; 
+
+  var passage;
+
+  var options = {
+    url: 'http://gracepoint-berkeley-devotions.org/daily-devotion-text/'
+  };
+
+  request(options, function(error, response, body) {
+
+      if (!error && response.statusCode == 200) {
+        var obj = JSON.parse(body);
+        console.log(obj);
+      } else {
+        postMessageError("Error with verse " + passage);
+      };
+    });
+
+  body = {
+    'q': passage,
+    'include-headings': false,
+    'include-footnotes': false,
+    'include-verse-numbers': false,
+    'include-short-copyright': false,
+    'include-passage-references': false
+  };
+
+  var url = '/v3/passage/text/?';
+  url += Object.keys(body).map(function(k) {
+    return encodeURIComponent(k) + '=' + encodeURIComponent(body[k])
+  }).join('&');
+
+
+
+  options = {
+    url: 'https://api.esv.org/v3/passage/text/',
+    headers: {
+     'Authorization': 'Token ' + crosswayAPIToken
+    },
+    qs: body,
+  };
+
+  request(options, function(error, response, body) {
+
+      if (!error && response.statusCode == 200) {
+        var obj = JSON.parse(body);
+        var keys = Object.keys(obj);
+        console.log(keys);
+        returnVerse += obj.passages.join();
+        returnVerse += passage;
+        console.log(returnVerse);
+        for (var i = 0; i <= returnVerse.length / 1000; i++) {
+          thing = returnVerse.substr(i * 1000, i * 1000 + 1000);
+          console.log(thing);
+          postMessageVerse(thing);
+        }
+      } else {
+        postMessageError("Error with verse " + passage);
+      };
+    });
+
+  
+  return returnVerse;
 }
 
 function getESVpassage(passage) {
