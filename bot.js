@@ -11,7 +11,8 @@ var rest_of_passage = "";
 function respond() {
   var request = JSON.parse(this.req.chunks[0]),
       verseRegex = /^\/verse.*$/,
-      dtRegex = /^\/dt\s?$/;
+      dtRegex = /^\/dt\s?$/,
+      proverbRegex= /^\/proverb\s?$/;
 
 
   if(request.text) {
@@ -22,6 +23,10 @@ function respond() {
    } else if (dtRegex.test(request.text)){
     this.res.writeHead(200);
     getDTpassage();
+     this.res.end();
+   } else if (proverbRegex.test(request.text)) {
+    this.res.writeHead(200);
+     getProverbPassage();
      this.res.end();
    } else if (rest_of_passage != "" && request.text === last_chunk_of_passage) {
      this.res.writeHead(200);
@@ -35,6 +40,20 @@ function respond() {
     this.res.writeHead(200);
     this.res.end();
   }
+}
+
+function sendPassages(error, response, body) {
+  if (!error && response.statusCode == 200) {
+    var obj = JSON.parse(body);
+    returnVerse += obj.passages.join();
+    returnVerse += obj.canonical;
+    console.log(returnVerse);
+    last_chunk_of_passage = returnVerse.substr(0, 1000);
+    postMessageVerse(last_chunk_of_passage);
+    rest_of_passage = returnVerse.substr(1000);
+  } else {
+    postMessageErr("Error sending passage " + error);
+  };
 }
 
 // function sleep( sleepDuration ){
@@ -140,9 +159,38 @@ function getDTpassage() {
     });
 }
 
+function getProverbPassage() {
+  returnVerse = ""; 
+  var passage = "Proverbs 1";
+
+  body = {
+    'q': passage,
+    'include-headings': false,
+    'include-footnotes': false,
+    'include-short-copyright': false,
+    'include-passage-references': false
+  };
+
+  var url = '/v3/passage/text/?';
+  url += Object.keys(body).map(function(k) {
+    return encodeURIComponent(k) + '=' + encodeURIComponent(body[k])
+  }).join('&');
+
+  console.log(url);
+
+  options = {
+    url: 'https://api.esv.org/v3/passage/text/',
+    headers: {
+     'Authorization': 'Token ' + crosswayAPIToken
+    },
+    qs: body,
+  };
+
+  request(options, sendPassages);
+}
+
 function getESVpassage(passage) {
   returnVerse = ""; 
-  console.log(crosswayAPIToken);
 
   body = {
     'q': passage,
@@ -158,7 +206,6 @@ function getESVpassage(passage) {
     return encodeURIComponent(k) + '=' + encodeURIComponent(body[k])
   }).join('&');
 
-  console.log(url);
 
   options = {
     url: 'https://api.esv.org/v3/passage/text/',
@@ -179,7 +226,7 @@ function getESVpassage(passage) {
         // for (var i = 0; i < keys.length; i++) {
         //   console.log(key);
         // };
-        console.log(keys);
+
         returnVerse += obj.passages.join();
         returnVerse += passage;
         console.log(returnVerse);
