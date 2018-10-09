@@ -56,10 +56,25 @@ function sendPassages(error, response, body) {
   };
 }
 
-// function sleep( sleepDuration ){
-//     var now = new Date().getTime();
-//     while(new Date().getTime() < now + sleepDuration){ /* do nothing */ } 
-// }
+function sendProverb(error, response, body) {
+  if (!error && response.statusCode == 200) {
+    var obj = JSON.parse(body);
+    fullProverbChapter += obj.passages.join();
+    returnVerse = getSingleProverb(fullProverbChapter, obj.canonical);
+
+    console.log(returnVerse);
+    last_chunk_of_passage = returnVerse.substr(0, 1000);
+    postMessageVerse(last_chunk_of_passage);
+    rest_of_passage = returnVerse.substr(1000);
+  } else {
+    postMessageErr("Error sending passage " + error);
+  };
+}
+
+function getSingleProverb(fullProverbChapter, chapterReference) {
+  refRegex = /\[\d+\]/;
+  return refRegex.exec(fullProverbChapter).length.toString();
+}
 
 function dateString() {
   var today = new Date();
@@ -93,15 +108,9 @@ function getDTpassage() {
   request(options, function(error, response, body) {
 
       if (!error && response.statusCode == 200) {
-        // console.log(body);
-        console.log(typeof body);
         // passage = body.search(passageRegex)
         passage = passageRegex.exec(body);
         // passage = passageRe.exec(body);
-        console.log("hi");
-        console.log(typeof passage);
-        console.log(passage[1]);
-        console.log(passage.length);
         var passage_reference = passage[1];
         body = {
           'q': passage_reference,
@@ -117,8 +126,6 @@ function getDTpassage() {
           return encodeURIComponent(k) + '=' + encodeURIComponent(body[k])
         }).join('&');
 
-
-
         options = {
           url: 'https://api.esv.org/v3/passage/text/',
           headers: {
@@ -127,31 +134,8 @@ function getDTpassage() {
           qs: body,
         };
 
-        request(options, function(error, response, body) {
-
-            if (!error && response.statusCode == 200) {
-              var obj = JSON.parse(body);
-              var keys = Object.keys(obj);
-              console.log(keys);
-              returnVerse += obj.passages.join();
-              returnVerse += passage_reference;
-              console.log(returnVerse);
-              last_chunk_of_passage = returnVerse.substr(0, 1000);
-              postMessageVerse(last_chunk_of_passage);
-              rest_of_passage = returnVerse.substr(1000);
-              // for (var i = 0; i <= returnVerse.length / 1000; i++) {
-              //   thing = returnVerse.substr(i * 1000, i * 1000 + 1000);
-              //   console.log(thing);
-              //   postMessageVerse(thing);
-              //   sleep(15000);
-              // }
-            } else {
-              postMessageErr("Error with verse " + passage_reference);
-            };
-          });
+        request(options, sendPassages);
  
-        
-        return returnVerse;
       } else {
         console.log(error);
         postMessageErr("Error with curl");
@@ -190,7 +174,7 @@ function getProverbPassage() {
     qs: body,
   };
 
-  request(options, sendPassages);
+  request(options, sendProverb);
 }
 
 function getESVpassage(passage) {
@@ -219,59 +203,7 @@ function getESVpassage(passage) {
     qs: body,
   };
 
-  request(options, function(error, response, body) {
-      // returnVerse += body;
-      // console.log(body);
-      // console.log(response);
-      // console.log(error);
-      if (!error && response.statusCode == 200) {
-        var obj = JSON.parse(body);
-        var keys = Object.keys(obj);
-        // for (var i = 0; i < keys.length; i++) {
-        //   console.log(key);
-        // };
-
-        returnVerse += obj.passages.join();
-        returnVerse += passage;
-        console.log(returnVerse);
-        last_chunk_of_passage = returnVerse.substr(0, 1000);
-        postMessageVerse(last_chunk_of_passage);
-        rest_of_passage = returnVerse.substr(1000);
-      } else {
-        postMessageErr("Error with verse " + passage);
-      };
-    });
-
-  // ESVreq = HTTPS.request(options, function(res) {
-  //     if(res.statusCode >= 200 && res.statusCode < 300) {
-  //       //success
-  //       res.on('error', function(err) {
-  //         console.log('error posting message '  + JSON.stringify(err));
-  //       });
-  //       res.on('timeout', function(err) {
-  //         console.log('timeout posting message '  + JSON.stringify(err));
-  //       });
-  //       res.on('data', function(data) {
-  //         returnVerse += data;
-  //         console.log(returnVerse);
-  //       });
-  //       res.on('end', function() {
-  //         console.log(returnVerse);
-  //       });
-  //       res.end();
-  //     } else {
-  //       console.log('rejecting bad status lol code ' + res.statusCode);
-  //       console.log(res);
-  //     }
-  //     console.log(res.statusCode);
-  // });
-
-  // console.log(ESVreq);
-  // curl -H 'Authorization: Token {{ YOUR_KEY }}' 'https://api.esv.org/v3/passage/text/?q=John+11:35'
-  //v3/passage/text/q=Romans%202%3A3-4&include-headings=false&include-footnotes=false&include-verse-numbers=false&include-short-copyright=false&include-passage-references=false
-
-  
-  return returnVerse;
+  request(options, sendPassages);
 }
 
 function postMessageVerse(passagetext) {
@@ -279,7 +211,6 @@ function postMessageVerse(passagetext) {
   var verseResponse = passagetext;
 
   botResponse = "";
-  // verseResponse = getESVpassage('Romans 2:3-4');
   console.log(verseResponse);
 
   options = {
@@ -291,7 +222,6 @@ function postMessageVerse(passagetext) {
   body = {
     "bot_id" : botID,
     "text" : verseResponse + botResponse
-    // "text": botResponse
   };
 
   console.log('sending ' + botResponse + ' to ' + botID);
