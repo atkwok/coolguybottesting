@@ -37,9 +37,25 @@ function respond() {
   }
 }
 
-function sleep( sleepDuration ){
-    var now = new Date().getTime();
-    while(new Date().getTime() < now + sleepDuration){ /* do nothing */ } 
+// function sleep( sleepDuration ){
+//     var now = new Date().getTime();
+//     while(new Date().getTime() < now + sleepDuration){ /* do nothing */ } 
+// }
+
+function dateString() {
+  var today = new Date();
+  var retstring = today.getFullYear().toString() + "-";
+  var month = today.getMonth() + 1;
+  month = month.toString();
+  if (month.length != 2) {
+    month = "0" + month;
+  }
+  retstring = retstring + month + "-";
+  var day = today.getDate();
+  if (day.length != 2) {
+    day = "0" + day;
+  }
+  return retstring + day;
 }
 
 function getDTpassage() {
@@ -50,7 +66,9 @@ function getDTpassage() {
   var options = {
     url: 'http://gracepoint-berkeley-devotions.org/daily-devotion-text/'
   };
-  var passageRegex = /2018-10-08(?:.|\n)*?Bible Text.*>(.*?)\(ESV\)/gmi
+  // var passageRegex = /2018-10-08(?:.|\n)*?Bible Text.*>(.*?)\(ESV\)/gmi
+  
+  var passageRe = new RegExp(dateString + "(?:.|\\n)*?Bible Text.*>(.*?)\\(ESV\\)", 'gmi');
   // var passageRegex = /2018-10-08/gm
 
   request(options, function(error, response, body) {
@@ -59,7 +77,8 @@ function getDTpassage() {
         // console.log(body);
         console.log(typeof body);
         // passage = body.search(passageRegex)
-        passage = passageRegex.exec(body);
+        // passage = passageRegex.exec(body);
+        passage = passageRe.exec(body);
         console.log("hi");
         console.log(typeof passage);
         console.log(passage[1]);
