@@ -48,57 +48,56 @@ function getDTpassage() {
         passage = body.search(passageRegex)
         console.log(passage[1])
         console.log(passage.length)
+        body = {
+          'q': passage,
+          'include-headings': false,
+          'include-footnotes': false,
+          'include-verse-numbers': false,
+          'include-short-copyright': false,
+          'include-passage-references': false
+        };
+
+        var url = '/v3/passage/text/?';
+        url += Object.keys(body).map(function(k) {
+          return encodeURIComponent(k) + '=' + encodeURIComponent(body[k])
+        }).join('&');
+
+
+
+        options = {
+          url: 'https://api.esv.org/v3/passage/text/',
+          headers: {
+           'Authorization': 'Token ' + crosswayAPIToken
+          },
+          qs: body,
+        };
+
+        request(options, function(error, response, body) {
+
+            if (!error && response.statusCode == 200) {
+              var obj = JSON.parse(body);
+              var keys = Object.keys(obj);
+              console.log(keys);
+              returnVerse += obj.passages.join();
+              returnVerse += passage;
+              console.log(returnVerse);
+              for (var i = 0; i <= returnVerse.length / 1000; i++) {
+                thing = returnVerse.substr(i * 1000, i * 1000 + 1000);
+                console.log(thing);
+                postMessageVerse(thing);
+              }
+            } else {
+              postMessageErr("Error with verse " + passage);
+            };
+          });
+
+        
+        return returnVerse;
       } else {
         console.log(error)
         postMessageErr("Error with curl" + passage);
       };
     });
-
-  body = {
-    'q': passage,
-    'include-headings': false,
-    'include-footnotes': false,
-    'include-verse-numbers': false,
-    'include-short-copyright': false,
-    'include-passage-references': false
-  };
-
-  var url = '/v3/passage/text/?';
-  url += Object.keys(body).map(function(k) {
-    return encodeURIComponent(k) + '=' + encodeURIComponent(body[k])
-  }).join('&');
-
-
-
-  options = {
-    url: 'https://api.esv.org/v3/passage/text/',
-    headers: {
-     'Authorization': 'Token ' + crosswayAPIToken
-    },
-    qs: body,
-  };
-
-  request(options, function(error, response, body) {
-
-      if (!error && response.statusCode == 200) {
-        var obj = JSON.parse(body);
-        var keys = Object.keys(obj);
-        console.log(keys);
-        returnVerse += obj.passages.join();
-        returnVerse += passage;
-        console.log(returnVerse);
-        for (var i = 0; i <= returnVerse.length / 1000; i++) {
-          thing = returnVerse.substr(i * 1000, i * 1000 + 1000);
-          console.log(thing);
-          postMessageVerse(thing);
-        }
-      } else {
-        postMessageErr("Error with verse " + passage);
-      };
-    });
-
-  
-  return returnVerse;
 }
 
 function getESVpassage(passage) {
