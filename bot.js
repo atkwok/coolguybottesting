@@ -14,6 +14,8 @@ function respond() {
       dtRegex = /^\/dt\s?$/,
       proverbRegex= /^\/proverb\s?$/;
 
+  console.log(this);
+
 
   if(request.text) {
    if (verseRegex.test(request.text)) {
