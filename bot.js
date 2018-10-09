@@ -68,7 +68,7 @@ function getDTpassage() {
   };
   // var passageRegex = /2018-10-08(?:.|\n)*?Bible Text.*>(.*?)\(ESV\)/gmi
   
-  var passageRe = new RegExp(dateString + "(?:.|\\n)*?Bible Text.*>(.*?)\\(ESV\\)", 'gmi');
+  var passageRe = new RegExp(dateString() + "(?:.|\\n)*?Bible Text.*>(.*?)\\(ESV\\)", 'gmi');
   // var passageRegex = /2018-10-08/gm
 
   request(options, function(error, response, body) {
