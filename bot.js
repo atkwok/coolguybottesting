@@ -29,7 +29,11 @@ function respond() {
   }
 }
 
-function getDTpassage() {
+function sleep(ms) {
+  return new Promise(resolve => setTimeout(resolve, ms));
+}
+
+async function getDTpassage() {
   returnVerse = ""; 
 
   var passage;
@@ -88,6 +92,7 @@ function getDTpassage() {
               for (var i = 0; i <= returnVerse.length / 1000; i++) {
                 thing = returnVerse.substr(i * 1000, i * 1000 + 1000);
                 console.log(thing);
+                await sleep(2);
                 postMessageVerse(thing);
               }
             } else {
