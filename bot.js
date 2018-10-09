@@ -159,9 +159,13 @@ function getDTpassage() {
     });
 }
 
+function randomProverbChapter() {
+    return Math.floor(Math.random() * (31) + 1).toString();
+}
+
 function getProverbPassage() {
   returnVerse = ""; 
-  var passage = "Proverbs 1";
+  var passage = "Proverbs " + randomProverbChapter();
 
   body = {
     'q': passage,
