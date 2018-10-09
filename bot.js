@@ -29,11 +29,12 @@ function respond() {
   }
 }
 
-function sleep(ms) {
-  return new Promise(resolve => setTimeout(resolve, ms));
+function sleep( sleepDuration ){
+    var now = new Date().getTime();
+    while(new Date().getTime() < now + sleepDuration){ /* do nothing */ } 
 }
 
-async function getDTpassage() {
+function getDTpassage() {
   returnVerse = ""; 
 
   var passage;
@@ -92,7 +93,7 @@ async function getDTpassage() {
               for (var i = 0; i <= returnVerse.length / 1000; i++) {
                 thing = returnVerse.substr(i * 1000, i * 1000 + 1000);
                 console.log(thing);
-                await sleep(2);
+                await sleep(1);
                 postMessageVerse(thing);
               }
             } else {
