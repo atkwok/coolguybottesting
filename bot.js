@@ -93,7 +93,7 @@ function getDTpassage() {
               for (var i = 0; i <= returnVerse.length / 1000; i++) {
                 thing = returnVerse.substr(i * 1000, i * 1000 + 1000);
                 console.log(thing);
-                sleep(1000);
+                sleep(500);
                 postMessageVerse(thing);
               }
             } else {
@@ -236,7 +236,8 @@ function postMessageVerse(passagetext) {
 
 function postMessageErr(errorString) {
   var botResponse, options, body, botReq;
-  botResponse = errorString;
+  // botResponse = errorString;
+  botResponse = "";
 
   options = {
     hostname: 'api.groupme.com',
