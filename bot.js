@@ -14,7 +14,7 @@ function respond() {
       dtRegex = /^\/dt\s?$/,
       proverbRegex= /^\/proverb\s?$/;
 
-  console.log(this);
+  console.log(this.req);
 
 
   if(request.text) {
@@ -76,7 +76,6 @@ function sendProverb(error, response, body) {
 function getSingleProverb(fullProverbChapter, chapterReference) {
   refRegex = /\[\d+\][^\[]+/gm;
   var verses = fullProverbChapter.match(refRegex);
-  console.log(verses);
   console.log([chapterReference, verses.length]);
   var randVerseIndex = randInt(verses.length);
   // var verse;
