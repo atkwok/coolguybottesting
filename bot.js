@@ -72,8 +72,10 @@ function sendProverb(error, response, body) {
 }
 
 function getSingleProverb(fullProverbChapter, chapterReference) {
-  refRegex = /\[\d+\]/g;
+  refRegex = /\[\d+\][^\[]+]/g;
   var verses = fullProverbChapter.match(refRegex);
+  console.log([chapterReference, verses.length]);
+  var randVerseIndex = randInt(verses.length);
   // var verse;
   // do {
   //   verse = refRegex.exec(fullProverbChapter);
@@ -82,7 +84,7 @@ function getSingleProverb(fullProverbChapter, chapterReference) {
   //   }
   // } while (verse);
   // console.log(verses);
-  return verses[0].toString();
+  return verses[randVerseIndex].substr(4) + chapterReference + ":" + randVerseIndex.toString();
 }
 
 function dateString() {
@@ -156,9 +158,15 @@ function randomProverbChapter() {
     return Math.floor(Math.random() * (31) + 1).toString();
 }
 
+function randInt(n) {
+  return Math.floor(Math.random() * n)
+}
+
 function getProverbPassage() {
   returnVerse = ""; 
-  var passage = "Proverbs " + randomProverbChapter();
+
+  chapIndex = randInt(31) + 1;
+  var passage = "Proverbs " + chapIndex.toString();
 
   body = {
     'q': passage,
