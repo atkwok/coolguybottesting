@@ -73,7 +73,7 @@ function sendProverb(error, response, body) {
 
 function getSingleProverb(fullProverbChapter, chapterReference) {
   refRegex = /\[\d+\]/;
-  return refRegex.exec(fullProverbChapter).length.toString();
+  return fullProverbChapter.match(refRegex).length.toString();
 }
 
 function dateString() {
