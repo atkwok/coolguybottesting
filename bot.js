@@ -51,8 +51,9 @@ function getDTpassage() {
         console.log(typeof passage);
         console.log(passage[1]);
         console.log(passage.length);
+        var passage_reference = passage[1];
         body = {
-          'q': passage,
+          'q': passage_reference,
           'include-headings': false,
           'include-footnotes': false,
           'include-verse-numbers': false,
@@ -82,7 +83,7 @@ function getDTpassage() {
               var keys = Object.keys(obj);
               console.log(keys);
               returnVerse += obj.passages.join();
-              returnVerse += passage;
+              returnVerse += passage_reference;
               console.log(returnVerse);
               for (var i = 0; i <= returnVerse.length / 1000; i++) {
                 thing = returnVerse.substr(i * 1000, i * 1000 + 1000);
@@ -90,15 +91,15 @@ function getDTpassage() {
                 postMessageVerse(thing);
               }
             } else {
-              postMessageErr("Error with verse " + passage);
+              postMessageErr("Error with verse " + passage_reference);
             };
           });
 
         
         return returnVerse;
       } else {
-        console.log(error)
-        postMessageErr("Error with curl" + passage);
+        console.log(error);
+        postMessageErr("Error with curl");
       };
     });
 }
