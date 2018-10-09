@@ -5,6 +5,8 @@ const request = require('request');
 var botID = process.env.BOT_ID;
 var crosswayAPIToken = process.env.CROSSWAY_API_TOKEN;
 var ESV_API_URL = "https://api.esv.org/v3/passage/text/";
+var last_chunk_of_passage = "";
+var rest_of_passage = "";
 
 function respond() {
   var request = JSON.parse(this.req.chunks[0]),
@@ -21,6 +23,10 @@ function respond() {
     this.res.writeHead(200);
     getDTpassage();
      this.res.end();
+   } else if (rest_of_passage != "" && request.text === last_chunk_of_passage) {
+     last_chunk_of_passage = rest_of_passage.substr(0, 1000);
+     postMessageVerse(last_chunk_of_passage);
+     rest_of_passage = rest_of_passage.substr(1000);
    }
   } else {
     console.log("don't care");
@@ -90,12 +96,15 @@ function getDTpassage() {
               returnVerse += obj.passages.join();
               returnVerse += passage_reference;
               console.log(returnVerse);
-              for (var i = 0; i <= returnVerse.length / 1000; i++) {
-                thing = returnVerse.substr(i * 1000, i * 1000 + 1000);
-                console.log(thing);
-                postMessageVerse(thing);
-                sleep(15000);
-              }
+              last_chunk_of_passage = returnVerse.substr(0, 1000);
+              postMessageVerse(last_chunk_of_passage);
+              rest_of_passage = returnVerse.substr(1000);
+              // for (var i = 0; i <= returnVerse.length / 1000; i++) {
+              //   thing = returnVerse.substr(i * 1000, i * 1000 + 1000);
+              //   console.log(thing);
+              //   postMessageVerse(thing);
+              //   sleep(15000);
+              // }
             } else {
               postMessageErr("Error with verse " + passage_reference);
             };
