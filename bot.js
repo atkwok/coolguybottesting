@@ -37,8 +37,8 @@ function getDTpassage() {
   var options = {
     url: 'http://gracepoint-berkeley-devotions.org/daily-devotion-text/'
   };
-  // var passageRegex = /2018-10-08(?:.|\n)*?Bible Text.*>(.*?)\(ESV\)/gmi
-  var passageRegex = /2018-10-08/gm
+  var passageRegex = /2018-10-08(?:.|\n)*?Bible Text.*>(.*?)\(ESV\)/gmi
+  // var passageRegex = /2018-10-08/gm
 
   request(options, function(error, response, body) {
 
@@ -47,6 +47,8 @@ function getDTpassage() {
         console.log(typeof body);
         // passage = body.search(passageRegex)
         passage = passageRegex.exec(body);
+        console.log("hi");
+        console.log(typeof passage);
         console.log(passage[1]);
         console.log(passage.length);
         body = {
