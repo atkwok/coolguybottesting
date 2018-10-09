@@ -164,11 +164,9 @@ function getESVpassage(passage) {
         returnVerse += obj.passages.join();
         returnVerse += passage;
         console.log(returnVerse);
-        for (var i = 0; i <= returnVerse.length / 1000; i++) {
-          thing = returnVerse.substr(i * 1000, i * 1000 + 1000);
-          console.log(thing);
-          postMessageVerse(thing);
-        }
+        last_chunk_of_passage = returnVerse.substr(0, 1000);
+        postMessageVerse(last_chunk_of_passage);
+        rest_of_passage = returnVerse.substr(1000);
       } else {
         postMessageErr("Error with verse " + passage);
       };
