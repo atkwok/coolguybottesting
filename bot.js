@@ -45,7 +45,7 @@ function respond() {
 function sendPassages(error, response, body) {
   if (!error && response.statusCode == 200) {
     var obj = JSON.parse(body);
-    returnVerse += obj.passages.join();
+    returnVerse = obj.passages.join();
     returnVerse += obj.canonical;
     console.log(returnVerse);
     last_chunk_of_passage = returnVerse.substr(0, 1000);
@@ -59,7 +59,7 @@ function sendPassages(error, response, body) {
 function sendProverb(error, response, body) {
   if (!error && response.statusCode == 200) {
     var obj = JSON.parse(body);
-    fullProverbChapter += obj.passages.join();
+    fullProverbChapter = obj.passages.join();
     returnVerse = getSingleProverb(fullProverbChapter, obj.canonical);
 
     console.log(returnVerse);
