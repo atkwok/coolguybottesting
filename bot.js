@@ -24,9 +24,11 @@ function respond() {
     getDTpassage();
      this.res.end();
    } else if (rest_of_passage != "" && request.text === last_chunk_of_passage) {
+     this.res.writeHead(200);
      last_chunk_of_passage = rest_of_passage.substr(0, 1000);
      postMessageVerse(last_chunk_of_passage);
      rest_of_passage = rest_of_passage.substr(1000);
+     this.res.end();
    }
   } else {
     console.log("don't care");
