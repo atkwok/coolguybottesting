@@ -73,15 +73,15 @@ function sendProverb(error, response, body) {
 
 function getSingleProverb(fullProverbChapter, chapterReference) {
   refRegex = /\[\d+\]/g;
-  var verses = [];
-  var verse;
-  do {
-    verse = refRegex.exec(fullProverbChapter);
-    if (verse) {
-      verses += [[verse[0], verse[1]]];
-    }
-  } while (verse);
-  console.log(verses);
+  var verses = fullProverbChapter.match(refRegex);
+  // var verse;
+  // do {
+  //   verse = refRegex.exec(fullProverbChapter);
+  //   if (verse) {
+  //     verses += [[verse[0], verse[1]]];
+  //   }
+  // } while (verse);
+  // console.log(verses);
   return verses[0].toString();
 }
 
