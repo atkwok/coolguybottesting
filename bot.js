@@ -44,10 +44,11 @@ function getDTpassage() {
 
       if (!error && response.statusCode == 200) {
         // console.log(body);
-        console.log(typeof body)
-        passage = body.search(passageRegex)
-        console.log(passage[1])
-        console.log(passage.length)
+        console.log(typeof body);
+        // passage = body.search(passageRegex)
+        passage = passageRegex.exec(body);
+        console.log(passage[1]);
+        console.log(passage.length);
         body = {
           'q': passage,
           'include-headings': false,
