@@ -85,7 +85,8 @@ function getSingleProverb(fullProverbChapter, chapterReference) {
   //   }
   // } while (verse);
   // console.log(verses);
-  return verses[randVerseIndex].substr(4) + chapterReference + ":" + randVerseIndex.toString();
+  var verseNum = randVerseIndex + 1;
+  return verses[randVerseIndex].substr(4) + chapterReference + ":" + verseNum.toString();
 }
 
 function dateString() {
