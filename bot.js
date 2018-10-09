@@ -73,7 +73,9 @@ function sendProverb(error, response, body) {
 
 function getSingleProverb(fullProverbChapter, chapterReference) {
   refRegex = /\[\d+\][^\[]+]/g;
+  console.log(chapterReference);
   var verses = fullProverbChapter.match(refRegex);
+  console.log(verses);
   console.log([chapterReference, verses.length]);
   var randVerseIndex = randInt(verses.length);
   // var verse;
