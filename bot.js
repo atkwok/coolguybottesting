@@ -10,6 +10,9 @@ var rest_of_passage = "";
 var botID_dict = {"44506327": process.env.TEST_ID,
                   "42096063": process.env.BOT_ID,
                   "31816708": process.env.TEST_TWO_ID};
+var rateLimit = {"44506327": 100,
+                  "42096063": 20,
+                  "31816708": 100};
 
 function respond() {
   var request = JSON.parse(this.req.chunks[0]),
@@ -191,7 +194,7 @@ function getProverbPassage(group_id) {
     qs: body,
   };
 
-  function curry(error, response, body) {return sendPassages(error, response, body, group_id)};
+  function curry(error, response, body) {return sendProverb(error, response, body, group_id)};
 
   request(options, curry);
 }
@@ -244,6 +247,12 @@ function postMessageVerse(passagetext, group_id) {
     "bot_id" : botID_dict[group_id],
     "text" : verseResponse + botResponse
   };
+
+  if (rateLimit[group_id] < 0) {
+    return;
+  } else {
+    rateLimit[group_id] -= 1;
+  }
 
   console.log("sending " + botResponse + " to " + botID);
 
