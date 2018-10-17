@@ -66,9 +66,9 @@ function sendPassages(error, response, body, group_id) {
     returnVerse = obj.passages.join();
     returnVerse += obj.canonical;
     console.log(returnVerse);
-    last_chunk_dict[request.group_id] = returnVerse.substr(0, 1000);
-    postMessageVerse(last_chunk_dict[request.group_id], group_id);
-    rest_of_passage_dict[request.group_id] = returnVerse.substr(1000);
+    last_chunk_dict[group_id] = returnVerse.substr(0, 1000);
+    postMessageVerse(last_chunk_dict[group_id], group_id);
+    rest_of_passage_dict[group_id] = returnVerse.substr(1000);
   } else {
     postMessageErr("Error sending passage " + error);
   };
@@ -81,9 +81,9 @@ function sendProverb(error, response, body, group_id) {
     returnVerse = getSingleProverb(fullProverbChapter, obj.canonical);
 
     console.log(returnVerse);
-    last_chunk_dict[request.group_id] = returnVerse.substr(0, 1000);
-    postMessageVerse(last_chunk_dict[request.group_id], group_id);
-    rest_of_passage_dict[request.group_id] = returnVerse.substr(1000);
+    last_chunk_dict[group_id] = returnVerse.substr(0, 1000);
+    postMessageVerse(last_chunk_dict[group_id], group_id);
+    rest_of_passage_dict[group_id] = returnVerse.substr(1000);
   } else {
     postMessageErr("Error sending passage " + error);
   };
