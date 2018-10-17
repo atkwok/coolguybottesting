@@ -1,13 +1,15 @@
-var HTTPS = require('https');
-var cool = require('cool-ascii-faces');
-const request = require('request');
+var HTTPS = require("https");
+var cool = require("cool-ascii-faces");
+const request = require("request");
 
 var botID = process.env.TEST_ID;
 var crosswayAPIToken = process.env.CROSSWAY_API_TOKEN;
 var ESV_API_URL = "https://api.esv.org/v3/passage/text/";
 var last_chunk_of_passage = "";
 var rest_of_passage = "";
-var botID_dict = {"44506327": process.env.TEST_ID, "42096063": process.env.BOT_ID, "31816708": process.env.TEST_TWO_ID};
+var botID_dict = {"44506327": process.env.TEST_ID,
+                  "42096063": process.env.BOT_ID,
+                  "31816708": process.env.TEST_TWO_ID};
 
 function respond() {
   var request = JSON.parse(this.req.chunks[0]),
@@ -100,16 +102,16 @@ function dateString() {
 }
 
 function getDTpassage(group_id) {
-  returnVerse = ""; 
+  returnVerse = "";
 
   var passage;
 
   var options = {
-    url: 'http://gracepoint-berkeley-devotions.org/daily-devotion-text/'
+    url: "http://gracepoint-berkeley-devotions.org/daily-devotion-text/"
   };
   // var passageRegex = /2018-10-08(?:.|\n)*?Bible Text.*>(.*?)\(ESV\)/gmi
   var passageRegex = /Bible Text.*>(.*?)\(ESV\)/gmi;
-  // var passageRe = new RegExp(dateString() + "(?:.|\\n)*?Bible Text.*>(.*?)\\(ESV\\)", 'gmi');
+  // var passageRe = new RegExp(dateString() + "(?:.|\\n)*?Bible Text.*>(.*?)\\(ESV\\)", "gmi");
   // var passageRegex = /2018-10-08/gm
 
   request(options, function(error, response, body) {
@@ -120,31 +122,31 @@ function getDTpassage(group_id) {
         // passage = passageRe.exec(body);
         var passage_reference = passage[1];
         body = {
-          'q': passage_reference,
-          'include-headings': false,
-          'include-footnotes': false,
-          'include-verse-numbers': false,
-          'include-short-copyright': false,
-          'include-passage-references': false
+          "q": passage_reference,
+          "include-headings": false,
+          "include-footnotes": false,
+          "include-verse-numbers": false,
+          "include-short-copyright": false,
+          "include-passage-references": false
         };
 
-        var url = '/v3/passage/text/?';
+        var url = "/v3/passage/text/?";
         url += Object.keys(body).map(function(k) {
-          return encodeURIComponent(k) + '=' + encodeURIComponent(body[k])
-        }).join('&');
+          return encodeURIComponent(k) + "=" + encodeURIComponent(body[k])
+        }).join("&");
 
         options = {
-          url: 'https://api.esv.org/v3/passage/text/',
+          url: "https://api.esv.org/v3/passage/text/",
           headers: {
-           'Authorization': 'Token ' + crosswayAPIToken
+           "Authorization": "Token " + crosswayAPIToken
           },
           qs: body,
         };
 
-        const curry = (error, response, body) => {return sendPassages(error, response, body, group_id)};
+        curry = (error, response, body) => {return sendPassages(error, response, body, group_id)};
 
         request(options, curry);
- 
+
       } else {
         console.log(error);
         postMessageErr("Error with curl");
@@ -161,30 +163,30 @@ function randInt(n) {
 }
 
 function getProverbPassage(group_id) {
-  returnVerse = ""; 
+  returnVerse = "";
 
   chapIndex = randInt(31) + 1;
   var passage = "Proverbs " + chapIndex.toString();
 
   body = {
-    'q': passage,
-    'include-headings': false,
-    'include-footnotes': false,
-    'include-short-copyright': false,
-    'include-passage-references': false
+    "q": passage,
+    "include-headings": false,
+    "include-footnotes": false,
+    "include-short-copyright": false,
+    "include-passage-references": false
   };
 
-  var url = '/v3/passage/text/?';
+  var url = "/v3/passage/text/?";
   url += Object.keys(body).map(function(k) {
-    return encodeURIComponent(k) + '=' + encodeURIComponent(body[k])
-  }).join('&');
+    return encodeURIComponent(k) + "=" + encodeURIComponent(body[k])
+  }).join("&");
 
   console.log(url);
 
   options = {
-    url: 'https://api.esv.org/v3/passage/text/',
+    url: "https://api.esv.org/v3/passage/text/",
     headers: {
-     'Authorization': 'Token ' + crosswayAPIToken
+     "Authorization": "Token " + crosswayAPIToken
     },
     qs: body,
   };
@@ -195,27 +197,27 @@ function getProverbPassage(group_id) {
 }
 
 function getESVpassage(passage, group_id) {
-  returnVerse = ""; 
+  returnVerse = "";
 
   body = {
-    'q': passage,
-    'include-headings': false,
-    'include-footnotes': false,
-    'include-verse-numbers': false,
-    'include-short-copyright': false,
-    'include-passage-references': false
+    "q": passage,
+    "include-headings": false,
+    "include-footnotes": false,
+    "include-verse-numbers": false,
+    "include-short-copyright": false,
+    "include-passage-references": false
   };
 
-  var url = '/v3/passage/text/?';
+  var url = "/v3/passage/text/?";
   url += Object.keys(body).map(function(k) {
-    return encodeURIComponent(k) + '=' + encodeURIComponent(body[k])
-  }).join('&');
+    return encodeURIComponent(k) + "=" + encodeURIComponent(body[k])
+  }).join("&");
 
 
   options = {
-    url: 'https://api.esv.org/v3/passage/text/',
+    url: "https://api.esv.org/v3/passage/text/",
     headers: {
-     'Authorization': 'Token ' + crosswayAPIToken
+     "Authorization": "Token " + crosswayAPIToken
     },
     qs: body,
   };
@@ -233,9 +235,9 @@ function postMessageVerse(passagetext, group_id) {
   console.log(verseResponse);
 
   options = {
-    hostname: 'api.groupme.com',
-    path: '/v3/bots/post',
-    method: 'POST'
+    hostname: "api.groupme.com",
+    path: "/v3/bots/post",
+    method: "POST"
   };
 
   body = {
@@ -243,21 +245,21 @@ function postMessageVerse(passagetext, group_id) {
     "text" : verseResponse + botResponse
   };
 
-  console.log('sending ' + botResponse + ' to ' + botID);
+  console.log("sending " + botResponse + " to " + botID);
 
   botReq = HTTPS.request(options, function(res) {
       if(res.statusCode == 202) {
         //neat
       } else {
-        console.log('rejecting bad status code ' + res.statusCode);
+        console.log("rejecting bad status code " + res.statusCode);
       }
   });
 
-  botReq.on('error', function(err) {
-    console.log('error posting message '  + JSON.stringify(err));
+  botReq.on("error", function(err) {
+    console.log("error posting message "  + JSON.stringify(err));
   });
-  botReq.on('timeout', function(err) {
-    console.log('timeout posting message '  + JSON.stringify(err));
+  botReq.on("timeout", function(err) {
+    console.log("timeout posting message "  + JSON.stringify(err));
   });
   botReq.end(JSON.stringify(body));
 }
@@ -268,9 +270,9 @@ function postMessageErr(errorString) {
   botResponse = "";
 
   options = {
-    hostname: 'api.groupme.com',
-    path: '/v3/bots/post',
-    method: 'POST'
+    hostname: "api.groupme.com",
+    path: "/v3/bots/post",
+    method: "POST"
   };
 
   body = {
@@ -279,21 +281,21 @@ function postMessageErr(errorString) {
     // "text": botResponse
   };
 
-  console.log('sending ' + botResponse + ' to ' + botID);
+  console.log("sending " + botResponse + " to " + botID);
 
   botReq = HTTPS.request(options, function(res) {
       if(res.statusCode == 202) {
         //neat
       } else {
-        console.log('rejecting bad status code ' + res.statusCode);
+        console.log("rejecting bad status code " + res.statusCode);
       }
   });
 
-  botReq.on('error', function(err) {
-    console.log('error posting message '  + JSON.stringify(err));
+  botReq.on("error", function(err) {
+    console.log("error posting message "  + JSON.stringify(err));
   });
-  botReq.on('timeout', function(err) {
-    console.log('timeout posting message '  + JSON.stringify(err));
+  botReq.on("timeout", function(err) {
+    console.log("timeout posting message "  + JSON.stringify(err));
   });
   botReq.end(JSON.stringify(body));
 }
@@ -303,13 +305,13 @@ function postMessage() {
   var verseResponse;
 
   botResponse = cool();
-  verseResponse = getESVpassage('Romans 2:3-4');
+  verseResponse = getESVpassage("Romans 2:3-4");
   console.log(verseResponse);
 
   options = {
-    hostname: 'api.groupme.com',
-    path: '/v3/bots/post',
-    method: 'POST'
+    hostname: "api.groupme.com",
+    path: "/v3/bots/post",
+    method: "POST"
   };
 
   body = {
@@ -318,21 +320,21 @@ function postMessage() {
     // "text": botResponse
   };
 
-  console.log('sending ' + botResponse + ' to ' + botID);
+  console.log("sending " + botResponse + " to " + botID);
 
   botReq = HTTPS.request(options, function(res) {
       if(res.statusCode == 202) {
         //neat
       } else {
-        console.log('rejecting bad status code ' + res.statusCode);
+        console.log("rejecting bad status code " + res.statusCode);
       }
   });
 
-  botReq.on('error', function(err) {
-    console.log('error posting message '  + JSON.stringify(err));
+  botReq.on("error", function(err) {
+    console.log("error posting message "  + JSON.stringify(err));
   });
-  botReq.on('timeout', function(err) {
-    console.log('timeout posting message '  + JSON.stringify(err));
+  botReq.on("timeout", function(err) {
+    console.log("timeout posting message "  + JSON.stringify(err));
   });
   botReq.end(JSON.stringify(body));
 }
