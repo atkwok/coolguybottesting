@@ -2,11 +2,12 @@ var HTTPS = require('https');
 var cool = require('cool-ascii-faces');
 const request = require('request');
 
-var botID = process.env.BOT_ID;
+var botID = process.env.TEST_ID;
 var crosswayAPIToken = process.env.CROSSWAY_API_TOKEN;
 var ESV_API_URL = "https://api.esv.org/v3/passage/text/";
 var last_chunk_of_passage = "";
 var rest_of_passage = "";
+var botID_dict = {"44506327": process.env.TEST_ID, "42096063": process.env.BOT_ID, "31816708": process.env.TEST_TWO_ID};
 
 function respond() {
   var request = JSON.parse(this.req.chunks[0]),
@@ -20,20 +21,20 @@ function respond() {
   if(request.text) {
    if (verseRegex.test(request.text)) {
     this.res.writeHead(200);
-    getESVpassage(request.text.substr(6));
+    getESVpassage(request.text.substr(6), request.group_id);
      this.res.end();
    } else if (dtRegex.test(request.text)){
     this.res.writeHead(200);
-    getDTpassage();
+    getDTpassage(request.group_id);
      this.res.end();
    } else if (proverbRegex.test(request.text)) {
     this.res.writeHead(200);
-     getProverbPassage();
+     getProverbPassage(request.group_id);
      this.res.end();
    } else if (rest_of_passage != "" && request.text === last_chunk_of_passage) {
      this.res.writeHead(200);
      last_chunk_of_passage = rest_of_passage.substr(0, 1000);
-     postMessageVerse(last_chunk_of_passage);
+     postMessageVerse(last_chunk_of_passage, request.group_id);
      rest_of_passage = rest_of_passage.substr(1000);
      this.res.end();
    }
@@ -51,7 +52,7 @@ function sendPassages(error, response, body) {
     returnVerse += obj.canonical;
     console.log(returnVerse);
     last_chunk_of_passage = returnVerse.substr(0, 1000);
-    postMessageVerse(last_chunk_of_passage);
+    postMessageVerse(last_chunk_of_passage, group_id);
     rest_of_passage = returnVerse.substr(1000);
   } else {
     postMessageErr("Error sending passage " + error);
@@ -66,7 +67,7 @@ function sendProverb(error, response, body) {
 
     console.log(returnVerse);
     last_chunk_of_passage = returnVerse.substr(0, 1000);
-    postMessageVerse(last_chunk_of_passage);
+    postMessageVerse(last_chunk_of_passage, group_id);
     rest_of_passage = returnVerse.substr(1000);
   } else {
     postMessageErr("Error sending passage " + error);
@@ -78,14 +79,6 @@ function getSingleProverb(fullProverbChapter, chapterReference) {
   var verses = fullProverbChapter.match(refRegex);
   console.log([chapterReference, verses.length]);
   var randVerseIndex = randInt(verses.length);
-  // var verse;
-  // do {
-  //   verse = refRegex.exec(fullProverbChapter);
-  //   if (verse) {
-  //     verses += [[verse[0], verse[1]]];
-  //   }
-  // } while (verse);
-  // console.log(verses);
   var verseNum = randVerseIndex + 1;
   return verses[randVerseIndex].substr(4) + chapterReference + ":" + verseNum.toString();
 }
@@ -106,7 +99,7 @@ function dateString() {
   return retstring + day;
 }
 
-function getDTpassage() {
+function getDTpassage(group_id) {
   returnVerse = ""; 
 
   var passage;
@@ -165,7 +158,7 @@ function randInt(n) {
   return Math.floor(Math.random() * n)
 }
 
-function getProverbPassage() {
+function getProverbPassage(group_id) {
   returnVerse = ""; 
 
   chapIndex = randInt(31) + 1;
@@ -197,7 +190,7 @@ function getProverbPassage() {
   request(options, sendProverb);
 }
 
-function getESVpassage(passage) {
+function getESVpassage(passage, group_id) {
   returnVerse = ""; 
 
   body = {
@@ -226,7 +219,7 @@ function getESVpassage(passage) {
   request(options, sendPassages);
 }
 
-function postMessageVerse(passagetext) {
+function postMessageVerse(passagetext, group_id) {
   var botResponse, options, body, botReq;
   var verseResponse = passagetext;
 
@@ -240,7 +233,7 @@ function postMessageVerse(passagetext) {
   };
 
   body = {
-    "bot_id" : botID,
+    "bot_id" : botID_dict[group_id],
     "text" : verseResponse + botResponse
   };
 
