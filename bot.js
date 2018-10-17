@@ -12,7 +12,7 @@ var botID_dict = {"44506327": process.env.TEST_ID,
                   "31816708": process.env.TEST_TWO_ID};
 var rateLimit = {"44506327": 100,
                   "42096063": 20,
-                  "31816708": 100};
+                  "31816708": 5};
 
 function respond() {
   var request = JSON.parse(this.req.chunks[0]),
