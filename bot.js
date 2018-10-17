@@ -7,12 +7,22 @@ var crosswayAPIToken = process.env.CROSSWAY_API_TOKEN;
 var ESV_API_URL = "https://api.esv.org/v3/passage/text/";
 var last_chunk_of_passage = "";
 var rest_of_passage = "";
+var last_chunk_dict = {"44506327": process.env.TEST_ID,
+                  "42096063": process.env.BOT_ID,
+                  "31816708": process.env.TEST_TWO_ID};
+var rest_of_passage_dict = {"44506327": process.env.TEST_ID,
+                  "42096063": process.env.BOT_ID,
+                  "31816708": process.env.TEST_TWO_ID};
 var botID_dict = {"44506327": process.env.TEST_ID,
                   "42096063": process.env.BOT_ID,
                   "31816708": process.env.TEST_TWO_ID};
 var rateLimit = {"44506327": 100,
                   "42096063": 20,
                   "31816708": 5};
+
+//Add last chunk of passage based on group
+//Add rate limit based on time
+//ADd better word breaks for paginating posts
 
 function respond() {
   var request = JSON.parse(this.req.chunks[0]),
@@ -36,11 +46,11 @@ function respond() {
     this.res.writeHead(200);
      getProverbPassage(request.group_id);
      this.res.end();
-   } else if (rest_of_passage != "" && request.text === last_chunk_of_passage) {
+   } else if (rest_of_passage_dict[request.group_id] != "" && request.text === last_chunk_dict[request.group_id]) {
      this.res.writeHead(200);
-     last_chunk_of_passage = rest_of_passage.substr(0, 1000);
-     postMessageVerse(last_chunk_of_passage, request.group_id);
-     rest_of_passage = rest_of_passage.substr(1000);
+     last_chunk_dict[request.group_id] = rest_of_passage_dict[request.group_id].substr(0, 1000);
+     postMessageVerse(last_chunk_dict[request.group_id], request.group_id);
+     rest_of_passage_dict[request.group_id] = rest_of_passage_dict[request.group_id].substr(1000);
      this.res.end();
    }
   } else {
@@ -56,9 +66,9 @@ function sendPassages(error, response, body, group_id) {
     returnVerse = obj.passages.join();
     returnVerse += obj.canonical;
     console.log(returnVerse);
-    last_chunk_of_passage = returnVerse.substr(0, 1000);
-    postMessageVerse(last_chunk_of_passage, group_id);
-    rest_of_passage = returnVerse.substr(1000);
+    last_chunk_dict[request.group_id] = returnVerse.substr(0, 1000);
+    postMessageVerse(last_chunk_dict[request.group_id], group_id);
+    rest_of_passage_dict[request.group_id] = returnVerse.substr(1000);
   } else {
     postMessageErr("Error sending passage " + error);
   };
@@ -71,9 +81,9 @@ function sendProverb(error, response, body, group_id) {
     returnVerse = getSingleProverb(fullProverbChapter, obj.canonical);
 
     console.log(returnVerse);
-    last_chunk_of_passage = returnVerse.substr(0, 1000);
-    postMessageVerse(last_chunk_of_passage, group_id);
-    rest_of_passage = returnVerse.substr(1000);
+    last_chunk_dict[request.group_id] = returnVerse.substr(0, 1000);
+    postMessageVerse(last_chunk_dict[request.group_id], group_id);
+    rest_of_passage_dict[request.group_id] = returnVerse.substr(1000);
   } else {
     postMessageErr("Error sending passage " + error);
   };
