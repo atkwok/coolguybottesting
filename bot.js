@@ -191,7 +191,7 @@ function getProverbPassage(group_id) {
     qs: body,
   };
 
-  const curry = (error, response, body) => {return sendPassages(error, response, body, group_id)};
+  function curry(error, response, body) {return sendPassages(error, response, body, group_id)};
 
   request(options, curry);
 }
@@ -222,7 +222,7 @@ function getESVpassage(passage, group_id) {
     qs: body,
   };
 
-  const curry = (error, response, body) => {return sendPassages(error, response, body, group_id)};
+  function curry(error, response, body) {return sendPassages(error, response, body, group_id)};
 
   request(options, curry);
 }
