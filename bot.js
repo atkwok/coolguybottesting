@@ -141,7 +141,9 @@ function getDTpassage(group_id) {
           qs: body,
         };
 
-        request(options, (error, response, body) => {return sendPassages(error, response, body, group_id)});
+        const curry = (error, response, body) => {return sendPassages(error, response, body, group_id)};
+
+        request(options, curry);
  
       } else {
         console.log(error);
@@ -187,7 +189,9 @@ function getProverbPassage(group_id) {
     qs: body,
   };
 
-  request(options, (error, response, body) => {return sendPassages(error, response, body, group_id)});
+  const curry = (error, response, body) => {return sendPassages(error, response, body, group_id)};
+
+  request(options, curry);
 }
 
 function getESVpassage(passage, group_id) {
@@ -216,7 +220,9 @@ function getESVpassage(passage, group_id) {
     qs: body,
   };
 
-  request(options, (error, response, body) => {return sendPassages(error, response, body, group_id)});
+  const curry = (error, response, body) => {return sendPassages(error, response, body, group_id)};
+
+  request(options, curry);
 }
 
 function postMessageVerse(passagetext, group_id) {
