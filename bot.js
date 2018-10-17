@@ -9,16 +9,22 @@ var last_chunk_of_passage = "";
 var rest_of_passage = "";
 var last_chunk_dict = {"44506327": "",
                   "42096063": "",
-                  "31816708": ""};
+                  "31816708": "",
+                  "15516149": ""};
 var rest_of_passage_dict = {"44506327": "",
                   "42096063": "",
-                  "31816708": ""};
+                  "31816708": "",
+                  "15516149": ""};
 var botID_dict = {"44506327": process.env.TEST_ID,
                   "42096063": process.env.BOT_ID,
-                  "31816708": process.env.TEST_TWO_ID};
+                  "31816708": process.env.TEST_TWO_ID,
+                  "15516149": process.env.PEER_BOT_ID};
 var rateLimit = {"44506327": 100,
                   "42096063": 20,
-                  "31816708": 5};
+                  "31816708": 5,
+                  "15516149": 30};
+
+const hangout_question = "Would anyone like to video chat today at noon PST? If so, please like this message!\n\n- WellVersedBot";
 
 //Add last chunk of passage based on group
 //Add rate limit based on time
@@ -28,9 +34,10 @@ function respond() {
   var request = JSON.parse(this.req.chunks[0]),
       verseRegex = /^\/verse.*$/,
       dtRegex = /^\/dt\s?$/,
-      proverbRegex= /^\/proverb\s?$/;
+      proverbRegex = /^\/proverb\s?$/,
+      hangoutRegex = /^\/hangout\s?$/;
 
-  console.log(this.req);
+  // console.log(this.req);
 
 
   if(request.text) {
@@ -45,6 +52,10 @@ function respond() {
    } else if (proverbRegex.test(request.text)) {
     this.res.writeHead(200);
      getProverbPassage(request.group_id);
+     this.res.end();
+   } else if (hangoutRegex.test(request.text) && request.group_id === "15516149") {
+    this.res.writeHead(200);
+     postMessageVerse(hangout_question, request.group_id);
      this.res.end();
    } else if (rest_of_passage_dict[request.group_id] != "" && request.text === last_chunk_dict[request.group_id]) {
      this.res.writeHead(200);
@@ -161,7 +172,7 @@ function getDTpassage(group_id) {
         request(options, curry);
 
       } else {
-        console.log(error);
+        // console.log(error);
         postMessageErr("Error with curl");
       };
     });
@@ -278,7 +289,7 @@ function postMessageVerse(passagetext, group_id) {
     console.log("error posting message "  + JSON.stringify(err));
   });
   botReq.on("timeout", function(err) {
-    console.log("timeout posting message "  + JSON.stringify(err));
+    console.log("timeout posting message ");
   });
   botReq.end(JSON.stringify(body));
 }
