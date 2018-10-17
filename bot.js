@@ -45,7 +45,7 @@ function respond() {
   }
 }
 
-function sendPassages(error, response, body) {
+function sendPassages(error, response, body, group_id) {
   if (!error && response.statusCode == 200) {
     var obj = JSON.parse(body);
     returnVerse = obj.passages.join();
@@ -59,7 +59,7 @@ function sendPassages(error, response, body) {
   };
 }
 
-function sendProverb(error, response, body) {
+function sendProverb(error, response, body, group_id) {
   if (!error && response.statusCode == 200) {
     var obj = JSON.parse(body);
     fullProverbChapter = obj.passages.join();
@@ -141,7 +141,7 @@ function getDTpassage(group_id) {
           qs: body,
         };
 
-        request(options, sendPassages);
+        request(options, (error, response, body) => sendPassages(error, response, body, group_id));
  
       } else {
         console.log(error);
@@ -187,7 +187,7 @@ function getProverbPassage(group_id) {
     qs: body,
   };
 
-  request(options, sendProverb);
+  request(options, (error, response, body) => sendPassages(error, response, body, group_id));
 }
 
 function getESVpassage(passage, group_id) {
@@ -216,7 +216,7 @@ function getESVpassage(passage, group_id) {
     qs: body,
   };
 
-  request(options, sendPassages);
+  request(options, (error, response, body) => sendPassages(error, response, body, group_id));
 }
 
 function postMessageVerse(passagetext, group_id) {
