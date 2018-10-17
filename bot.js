@@ -7,12 +7,12 @@ var crosswayAPIToken = process.env.CROSSWAY_API_TOKEN;
 var ESV_API_URL = "https://api.esv.org/v3/passage/text/";
 var last_chunk_of_passage = "";
 var rest_of_passage = "";
-var last_chunk_dict = {"44506327": process.env.TEST_ID,
-                  "42096063": process.env.BOT_ID,
-                  "31816708": process.env.TEST_TWO_ID};
-var rest_of_passage_dict = {"44506327": process.env.TEST_ID,
-                  "42096063": process.env.BOT_ID,
-                  "31816708": process.env.TEST_TWO_ID};
+var last_chunk_dict = {"44506327": "",
+                  "42096063": "",
+                  "31816708": ""};
+var rest_of_passage_dict = {"44506327": "",
+                  "42096063": "",
+                  "31816708": ""};
 var botID_dict = {"44506327": process.env.TEST_ID,
                   "42096063": process.env.BOT_ID,
                   "31816708": process.env.TEST_TWO_ID};
