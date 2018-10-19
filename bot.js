@@ -2,6 +2,9 @@ var HTTPS = require("https");
 var cool = require("cool-ascii-faces");
 const request = require("request");
 
+var DEV_MODE = true;
+const TEST_GROUP_ID = "44506327"
+
 var botID = process.env.TEST_ID;
 var crosswayAPIToken = process.env.CROSSWAY_API_TOKEN;
 var ESV_API_URL = "https://api.esv.org/v3/passage/text/";
@@ -19,12 +22,18 @@ var botID_dict = {"44506327": process.env.TEST_ID,
                   "42096063": process.env.BOT_ID,
                   "31816708": process.env.TEST_TWO_ID,
                   "15516149": process.env.PEER_BOT_ID};
-var rateLimit = {"44506327": 100,
-                  "42096063": 20,
-                  "31816708": 5,
-                  "15516149": 30};
+var rateLimit = {"44506327": 5,
+                  "42096063": 5,
+                  "31816708": 10,
+                  "15516149": 5};
+var rateLimitTimes = {"44506327": [],
+                  "42096063": [],
+                  "31816708": [],
+                  "15516149": []};
 
-const hangout_question = "Would anyone like to video chat today at noon PST? If so, please like this message!\n\n- WellVersedBot";
+const hangout_question = "Would anyone like to video chat the next time when it reaches noon PST? If so, please like this message!\n\n- WellVersedBot";
+const rate_limit_message = "Error 429! Too many requests! Please stop spamming me and wait a few minutes >_<";
+
 
 //Add last chunk of passage based on group
 //Add rate limit based on time
@@ -38,9 +47,12 @@ function respond() {
       hangoutRegex = /^\/hangout\s?$/;
 
   // console.log(this.req);
+  if (DEV_MODE && request.group_id != TEST_GROUP_ID) {
+    return;
+  }
 
 
-  if(request.text) {
+  if (request.text) {
    if (verseRegex.test(request.text)) {
     this.res.writeHead(200);
     getESVpassage(request.text.substr(6), request.group_id);
@@ -264,16 +276,27 @@ function postMessageVerse(passagetext, group_id) {
     method: "POST"
   };
 
+  var currTime = Date.now();
+  var reapDate = currTime - 60000;
+  var i = rateLimitTimes[group_id].length;
+  rateLimitTimes[group_id].push(currTime);
+  while (i >= 0) {
+      if (rateLimitTimes[group_id][i] < reapDate) { 
+          rateLimitTimes[group_id].splice(i, 1);
+      }
+      i -= 1;
+  }
+  
+  if (rateLimitTimes[group_id].length > rateLimit[group_id]) {
+    return;
+  } else if (rateLimitTimes[group_id].length == rateLimit[group_id]) {
+    verseResponse = rate_limit_message;
+  }
+
   body = {
     "bot_id" : botID_dict[group_id],
     "text" : verseResponse + botResponse
   };
-
-  if (rateLimit[group_id] < 0) {
-    return;
-  } else {
-    rateLimit[group_id] -= 1;
-  }
 
   console.log("sending " + botResponse + " to " + botID);
 
