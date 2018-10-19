@@ -2,7 +2,7 @@ var HTTPS = require("https");
 var cool = require("cool-ascii-faces");
 const request = require("request");
 
-var DEV_MODE = true;
+var DEV_MODE = false;
 const TEST_GROUP_ID = "44506327"
 
 var botID = process.env.TEST_ID;
@@ -286,7 +286,7 @@ function postMessageVerse(passagetext, group_id) {
       }
       i -= 1;
   }
-  
+
   if (rateLimitTimes[group_id].length > rateLimit[group_id]) {
     return;
   } else if (rateLimitTimes[group_id].length == rateLimit[group_id]) {
