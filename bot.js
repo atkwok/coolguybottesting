@@ -14,10 +14,10 @@ var last_chunk_dict = {"44506327": "",
                   "42096063": "",
                   "31816708": "",
                   "15516149": ""};
-var rest_of_passage_dict = {"44506327": "",
-                  "42096063": "",
-                  "31816708": "",
-                  "15516149": ""};
+var rest_of_passage_dict = {"44506327": [],
+                  "42096063": [],
+                  "31816708": [],
+                  "15516149": []};
 var botID_dict = {"44506327": process.env.TEST_ID,
                   "42096063": process.env.BOT_ID,
                   "31816708": process.env.TEST_TWO_ID,
@@ -69,11 +69,10 @@ function respond() {
     this.res.writeHead(200);
      postMessageVerse(hangout_question, request.group_id);
      this.res.end();
-   } else if (rest_of_passage_dict[request.group_id] != "" && request.text === last_chunk_dict[request.group_id]) {
+   } else if (rest_of_passage_dict[request.group_id].length > 0 && request.text === last_chunk_dict[request.group_id]) {
      this.res.writeHead(200);
-     last_chunk_dict[request.group_id] = rest_of_passage_dict[request.group_id].substr(0, 1000);
+     last_chunk_dict[request.group_id] = rest_of_passage_dict[request.group_id].shift();
      postMessageVerse(last_chunk_dict[request.group_id], request.group_id);
-     rest_of_passage_dict[request.group_id] = rest_of_passage_dict[request.group_id].substr(1000);
      this.res.end();
    }
   } else {
@@ -89,9 +88,17 @@ function sendPassages(error, response, body, group_id) {
     returnVerse = obj.passages.join();
     returnVerse += obj.canonical;
     console.log(returnVerse);
-    last_chunk_dict[group_id] = returnVerse.substr(0, 1000);
+    while (returnVerse.length > 1000) {
+      last_index = 1000;
+      while (!/\s/.test(returnVerse.charAt(last_index)) && last_index > 0) {
+        last_index --;
+      }
+      rest_of_passage_dict[group_id].push(returnVerse.substr(0, last_index));
+      returnVerse = returnVerse.substr(last_index);
+    }
+    rest_of_passage_dict[group_id].push(returnVerse);
+    last_chunk_dict[group_id] = rest_of_passage_dict[group_id].shift();
     postMessageVerse(last_chunk_dict[group_id], group_id);
-    rest_of_passage_dict[group_id] = returnVerse.substr(1000);
   } else {
     postMessageErr("Error sending passage " + error);
   };
@@ -104,9 +111,17 @@ function sendProverb(error, response, body, group_id) {
     returnVerse = getSingleProverb(fullProverbChapter, obj.canonical);
 
     console.log(returnVerse);
-    last_chunk_dict[group_id] = returnVerse.substr(0, 1000);
+    while (returnVerse.length > 1000) {
+      last_index = 1000;
+      while (!/\s/.test(returnVerse.charAt(last_index)) && last_index > 0) {
+        last_index --;
+      }
+      rest_of_passage_dict[group_id].push(returnVerse.substr(0, last_index));
+      returnVerse = returnVerse.substr(last_index);
+    }
+    rest_of_passage_dict[group_id].push(returnVerse);
+    last_chunk_dict[group_id] = rest_of_passage_dict[group_id].shift();
     postMessageVerse(last_chunk_dict[group_id], group_id);
-    rest_of_passage_dict[group_id] = returnVerse.substr(1000);
   } else {
     postMessageErr("Error sending passage " + error);
   };
