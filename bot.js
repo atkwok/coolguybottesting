@@ -33,8 +33,9 @@ var rateLimitTimes = {"44506327": [],
 
 const hangout_question = "Would anyone like to video chat the next time when it reaches noon PST? If so, please like this message!\n\n- WellVersedBot";
 const rate_limit_message = "Error 429! Too many requests! Please stop spamming me and wait a few minutes >_<";
-var romans_memory_verses = [];
-var hundred_memory_verses = [];
+var romans_memory_verses = ["Romans 1:14", "Romans 1:15", "Romans 1:16-17", "Romans 1:21-22", "Romans 2:3-4", "Romans 3:10-12", "Romans 3:22-24", "Romans 4:2-3", "Romans 4:6-8", "Romans 5:1-2", "Romans 5:6-8", "Romans 5:9-10", "Romans 6:11-12", "Romans 6:13-14", "Romans 6:23", "Romans 7:18-19", "Romans 7:24-25", "Romans 8:1", "Romans 8:15-16", "Romans 8:17-18", "Romans 8:22-23", "Romans 8:26", "Romans 8:28", "Romans 8:31-34", "Romans 8:35-37", "Romans 8:38-39", "Romans 9:1-3", "Romans 10:9-10", "Romans 10:13-15", "Romans 10:17", "Romans 11:33-36", "Romans 12:1-3", "Romans 12:4-5", "Romans 12:9-10", "Romans 12:11-14", "Romans 12:15-18", "Romans 12:21", "Romans 13:7", "Romans 13:8", "Romans 13:9-10", "Romans 13:14", "Romans 14:7-8", "Romans 14:11-13", "Romans 15:1-3", "Romans 16:17-18", "Romans 16:25-27"];
+var hundred_memory_verses = ["Genesis 1:1", "Deuteronomy 6:6-7", "Joshua 1:8", "2 Chronicles 7:14", "Psalm 4:8", "Psalm 23:1-6", "Psalm 55:22", "Psalm 56:3", "Psalm 100:4-5", "Psalm 118:24", "Psalm 119:11", "Proverbs 1:7", "Proverbs 3:5-6", "Proverbs 15:1", "Isaiah 9:6", "Isaiah 26:3", "Isaiah 53:5-6", "Jeremiah 29:11", "Matthew 6:33", "Matthew 28:18-20", "Luke 2:10-12", "John 1:1", "John 1:14", "John 3:16", "John 14:1-3", "John 14:6", "John 14:27", "Acts 1:8", "Acts 1:11", "Romans 1:16-17", "Romans 3:23", "Romans 5:8", "Romans 6:23", "Romans 8:28", "Romans 10:9-10", "Romans 12:1-2", "Romans 12:11-12", "Romans 12:18", "1 Corinthians 10:13", "2 Corinthians 9:7", "Galatians 2:20", "Galatians 5:22-23", "Ephesians 2:8-10", "Ephesians 5:18-21", "Philippians 4:4-7", "Colossians 3:15-17", "1 Thessalonians 5:16-18", "2 Timothy 3:16", "Hebrews 4:12", "Hebrews 4:16", "Hebrews 10:25", "Hebrews 11:6", "James 1:2-5", "1 Peter 1:3", "1 Peter 5:7", "1 John 1:7", "1 John 1:9", "1 John 5:11-12", "1 John 5:14-15", "Revelation 4:11", "Revelation 21:1-2", "Revelation 22:20"];
+var core_values_verses = ["Psalm 119:105", "2 Tim 3:16-17", "", "1 Tim 4:13-16", "Psalm 1:2", "2 Tim 2:15", "Eph 2:8-9", "1 John 1:2-3", "Acts 26:29", "1 Thess 5:16-18", "Phil 4:6", "Eph 6:18", "1 Cor 10:31", "1 Cor 15:58", "Romans 12:1", "Matt 5:16", "1 Tim 4:7-8", "Romans 13:14", "Gal 5:13-14", "Eph 5:1-2", "1 John 3:18", "Eph 4:11-13", "2 Tim 2:2", "Heb 13:7", "Heb 13:17", "Matt 28:18-20", "James 2:17", "1 John 5:2-3", "Luke 9:57-62", "Luke 14:25-27", "1 Cor 10:31", "Acts 2:46-47", "Romans 12:2", "Eph 5:8-11", "Heb 12:1", "1 Peter 5:9", "1 Cor 11:1", "Phil 2:29", "Joshua 4:4-7", "2 Tim 1:13-14", "Matt 26:6-13", "Romans 12:11", "2 Cor 11:23-29", "2 Tim 4:6-7", "Matt 6:19-20", "2 Cor 8:2-3", "2 Cor 9:6-7", "Acts 20:34-35", "Col 3:23-24", "Romans 12:5", "Gal 6:2", "Heb 3:13", "Acts 2:44-46", "Acts 20:18", "Romans 12:13", "Acts 20:20", "31", "Romans 16:3-13", "Eph 4:15", "Heb 10:24-25", "Ezra 7:10", "1 Tim 4:13", "2 Tim 4:2", "1 Peter 2:2", "Romans 12:2", "Col 1:16", "Eph 4:17-18", "2 Cor 10:5", "1 Peter 3:15", "Acts 26:25", "Exodus 35:10", "Romans 12:6-8", "1 Cor 14:12", "1 Peter 4:10", "Matt 28:19-20", "Col 1:28-29", "2 Tim 2:2", "Eph 4:11-13", "Acts 11:20", "Acts 13:2-3", "2 Tim 2:2", "Ezekiel 34:16", "Matt 9:36-38", "Matt 18:14", "Luke 19:10", "Acts 1:8", "1 Cor 9:22-23", "Matt 18:5", "Matt 25:40", "James 1:27"];
 
 //Add last chunk of passage based on group
 //Add rate limit based on time
@@ -47,7 +48,7 @@ function respond() {
       proverbRegex = /^\/proverbs?\s?$/i,
       romansRegex = /^\/romans\s?$/i,
       coreValueRegex = /^\/(core\s?)?values?\s?$/i,
-      memoryVerseRegex = /^\/memory\s?(verse)?$/i,
+      memoryVerseRegex = /^\/memory\s?(verse)?\s?$/i,
       hangoutRegex = /^\/hangout\s?$/i;
 
   // console.log(this.req);
@@ -79,15 +80,15 @@ function respond() {
      this.res.end();
    } else if (romansRegex.test(request.text)) {
     this.res.writeHead(200);
-     postMessageVerse("Romans", request.group_id);
+     getESVpassage(randItem(romans_memory_verses), request.group_id);
      this.res.end();
    } else if (coreValueRegex.test(request.text)) {
     this.res.writeHead(200);
-     postMessageVerse("corevalue", request.group_id);
+     getESVpassage(randItem(core_values_verses), request.group_id);
      this.res.end();
    } else if (memoryVerseRegex.test(request.text)) {
     this.res.writeHead(200);
-     postMessageVerse("memory ", request.group_id);
+     getESVpassage(randItem(hundred_memory_verses), request.group_id);
      this.res.end();
    } else if (hangoutRegex.test(request.text) && request.group_id === "15516149") {
     this.res.writeHead(200);
@@ -97,6 +98,9 @@ function respond() {
      this.res.writeHead(200);
      last_chunk_dict[request.group_id] = rest_of_passage_dict[request.group_id].shift();
      postMessageVerse(last_chunk_dict[request.group_id], request.group_id);
+     this.res.end();
+   } else {
+     this.res.writeHead(200);
      this.res.end();
    }
   } else {
