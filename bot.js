@@ -33,7 +33,8 @@ var rateLimitTimes = {"44506327": [],
 
 const hangout_question = "Would anyone like to video chat the next time when it reaches noon PST? If so, please like this message!\n\n- WellVersedBot";
 const rate_limit_message = "Error 429! Too many requests! Please stop spamming me and wait a few minutes >_<";
-
+var romans_memory_verses = [];
+var hundred_memory_verses = [];
 
 //Add last chunk of passage based on group
 //Add rate limit based on time
@@ -41,13 +42,24 @@ const rate_limit_message = "Error 429! Too many requests! Please stop spamming m
 
 function respond() {
   var request = JSON.parse(this.req.chunks[0]),
-      verseRegex = /^\/verse.*$/,
-      dtRegex = /^\/dt\s?$/,
-      proverbRegex = /^\/proverb\s?$/,
-      hangoutRegex = /^\/hangout\s?$/;
+      verseRegex = /^\/verse.*$/i,
+      dtRegex = /^\/dt\s?$/i,
+      proverbRegex = /^\/proverbs?\s?$/i,
+      romansRegex = /^\/romans\s?$/i,
+      coreValueRegex = /^\/(core\s?)?values?\s?$/i,
+      memoryVerseRegex = /^\/memory\s?(verse)?$/i,
+      hangoutRegex = /^\/hangout\s?$/i;
 
   // console.log(this.req);
+  var today = new Date();
+  if (today.getDay() == 0 || today.getHours() >= 23 || today.getHours <= 5) {
+    this.res.writeHead(200);
+    this.res.end();
+    return;
+  }
   if (DEV_MODE && request.group_id != TEST_GROUP_ID) {
+    this.res.writeHead(200);
+    this.res.end();
     return;
   }
 
@@ -64,6 +76,18 @@ function respond() {
    } else if (proverbRegex.test(request.text)) {
     this.res.writeHead(200);
      getProverbPassage(request.group_id);
+     this.res.end();
+   } else if (romansRegex.test(request.text)) {
+    this.res.writeHead(200);
+     postMessageVerse("Romans", request.group_id);
+     this.res.end();
+   } else if (coreValueRegex.test(request.text)) {
+    this.res.writeHead(200);
+     postMessageVerse("corevalue", request.group_id);
+     this.res.end();
+   } else if (memoryVerseRegex.test(request.text)) {
+    this.res.writeHead(200);
+     postMessageVerse("memory ", request.group_id);
      this.res.end();
    } else if (hangoutRegex.test(request.text) && request.group_id === "15516149") {
     this.res.writeHead(200);
@@ -211,6 +235,10 @@ function randomProverbChapter() {
 
 function randInt(n) {
   return Math.floor(Math.random() * n)
+}
+
+function randItem(arr) {
+  return arr[randInt(arr.length)];
 }
 
 function getProverbPassage(group_id) {
