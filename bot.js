@@ -2,7 +2,7 @@ var HTTPS = require("https");
 var cool = require("cool-ascii-faces");
 const request = require("request");
 
-var DEV_MODE = true;
+var DEV_MODE = false;
 const TEST_GROUP_ID = "44506327"
 
 var botID = process.env.TEST_ID;
