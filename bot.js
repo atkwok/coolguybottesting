@@ -2,12 +2,12 @@ var HTTPS = require("https");
 var cool = require("cool-ascii-faces");
 const request = require("request");
 
-var DEV_MODE = false;
+var DEV_MODE = true;
 const TEST_GROUP_ID = "44506327"
 
 var botID = process.env.TEST_ID;
 var crosswayAPIToken = process.env.CROSSWAY_API_TOKEN;
-var ESV_API_URL = "https://api.esv.org/v3/passage/text/";
+const ESV_API_URL = "https://api.esv.org/v3/passage/text/";
 var last_chunk_of_passage = "";
 var rest_of_passage = "";
 var last_chunk_dict = {"44506327": "",
@@ -261,6 +261,10 @@ function getESVpassage(passage, group_id) {
   function curry(error, response, body) {return sendPassages(error, response, body, group_id)};
 
   request(options, curry);
+}
+
+function splitText(text) {
+  
 }
 
 function postMessageVerse(passagetext, group_id) {
