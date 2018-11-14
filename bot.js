@@ -309,10 +309,7 @@ function getProverbPassage(group_id) {
 
 function getCoreValuepassage(core_value, group_id) {
   returnVerse = "";
-  var passage;
-  for (var p in core_value) {
-    passage = p;
-  }
+  var passage = Object(core_value).keys[0];
 
   body = {
     "q": passage,
