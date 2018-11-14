@@ -88,8 +88,9 @@ function respond() {
      getESVpassage(randItem(romans_memory_verses), request.group_id);
      this.res.end();
    } else if (coreValueRegex.test(request.text)) {
+    console.log("hi");
     this.res.writeHead(200);
-     getCoreValuepassage(randItem(core_values_verses), request.group_id);
+     getCoreValuePassage(randItem(core_values_verses), request.group_id);
      this.res.end();
    } else if (memoryVerseRegex.test(request.text)) {
     this.res.writeHead(200);
@@ -308,7 +309,7 @@ function getProverbPassage(group_id) {
   request(options, curry);
 }
 
-function getCoreValuepassage(core_value, group_id) {
+function getCoreValuePassage(core_value, group_id) {
   returnVerse = "";
   var passage = core_value[0];
   var headers = core_value[1];
