@@ -142,7 +142,7 @@ function sendCoreValue(error, response, body, group_id) {
     var obj = JSON.parse(body);
     returnVerse = obj.passages.join();
     returnVerse += obj.canonical;
-    returnVerse += core_values_verses[obj.query]
+    returnVerse += core_values_verses[obj.query];
     console.log(returnVerse);
     while (returnVerse.length > 1000) {
       last_index = 1000;
