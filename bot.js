@@ -89,7 +89,7 @@ function respond() {
      this.res.end();
    } else if (coreValueRegex.test(request.text)) {
     this.res.writeHead(200);
-     getESVpassage(randItem(core_values_verses), request.group_id);
+     getCoreValuepassage(randItem(core_values_verses), request.group_id);
      this.res.end();
    } else if (memoryVerseRegex.test(request.text)) {
     this.res.writeHead(200);
@@ -337,7 +337,7 @@ function getCoreValuepassage(core_value, group_id) {
     qs: body,
   };
 
-  function curry(error, response, body) {return sendPassages(error, response, body, group_id)};
+  function curry(error, response, body) {return sendCoreValue(error, response, body, group_id)};
 
   request(options, curry);
 }
