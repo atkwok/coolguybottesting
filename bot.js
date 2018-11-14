@@ -40,7 +40,7 @@ const hangout_question = "Would anyone like to video chat the next time when it 
 const rate_limit_message = "Error 429! Too many requests! Please stop spamming me and wait a few minutes >_<";
 var romans_memory_verses = ["Romans 1:14", "Romans 1:15", "Romans 1:16-17", "Romans 1:21-22", "Romans 2:3-4", "Romans 3:10-12", "Romans 3:22-24", "Romans 4:2-3", "Romans 4:6-8", "Romans 5:1-2", "Romans 5:6-8", "Romans 5:9-10", "Romans 6:11-12", "Romans 6:13-14", "Romans 6:23", "Romans 7:18-19", "Romans 7:24-25", "Romans 8:1", "Romans 8:15-16", "Romans 8:17-18", "Romans 8:22-23", "Romans 8:26", "Romans 8:28", "Romans 8:31-34", "Romans 8:35-37", "Romans 8:38-39", "Romans 9:1-3", "Romans 10:9-10", "Romans 10:13-15", "Romans 10:17", "Romans 11:33-36", "Romans 12:1-3", "Romans 12:4-5", "Romans 12:9-10", "Romans 12:11-14", "Romans 12:15-18", "Romans 12:21", "Romans 13:7", "Romans 13:8", "Romans 13:9-10", "Romans 13:14", "Romans 14:7-8", "Romans 14:11-13", "Romans 15:1-3", "Romans 16:17-18", "Romans 16:25-27"];
 var hundred_memory_verses = ["Genesis 1:1", "Deuteronomy 6:6-7", "Joshua 1:8", "2 Chronicles 7:14", "Psalm 4:8", "Psalm 23:1-6", "Psalm 55:22", "Psalm 56:3", "Psalm 100:4-5", "Psalm 118:24", "Psalm 119:11", "Proverbs 1:7", "Proverbs 3:5-6", "Proverbs 15:1", "Isaiah 9:6", "Isaiah 26:3", "Isaiah 53:5-6", "Jeremiah 29:11", "Matthew 6:33", "Matthew 28:18-20", "Luke 2:10-12", "John 1:1", "John 1:14", "John 3:16", "John 14:1-3", "John 14:6", "John 14:27", "Acts 1:8", "Acts 1:11", "Romans 1:16-17", "Romans 3:23", "Romans 5:8", "Romans 6:23", "Romans 8:28", "Romans 10:9-10", "Romans 12:1-2", "Romans 12:11-12", "Romans 12:18", "1 Corinthians 10:13", "2 Corinthians 9:7", "Galatians 2:20", "Galatians 5:22-23", "Ephesians 2:8-10", "Ephesians 5:18-21", "Philippians 4:4-7", "Colossians 3:15-17", "1 Thessalonians 5:16-18", "2 Timothy 3:16", "Hebrews 4:12", "Hebrews 4:16", "Hebrews 10:25", "Hebrews 11:6", "James 1:2-5", "1 Peter 1:3", "1 Peter 5:7", "1 John 1:7", "1 John 1:9", "1 John 5:11-12", "1 John 5:14-15", "Revelation 4:11", "Revelation 21:1-2", "Revelation 22:20"];
-var core_values_verses = ["Psalm 119:105", "2 Tim 3:16-17", "1 Tim 4:13-16", "Psalm 1:2", "2 Tim 2:15", "Eph 2:8-9", "1 John 1:2-3", "Acts 26:29", "1 Thess 5:16-18", "Phil 4:6", "Eph 6:18", "1 Cor 10:31", "1 Cor 15:58", "Romans 12:1", "Matt 5:16", "1 Tim 4:7-8", "Romans 13:14", "Gal 5:13-14", "Eph 5:1-2", "1 John 3:18", "Eph 4:11-13", "2 Tim 2:2", "Heb 13:7", "Heb 13:17", "Matt 28:18-20", "James 2:17", "1 John 5:2-3", "Luke 9:57-62", "Luke 14:25-27", "1 Cor 10:31", "Acts 2:46-47", "Romans 12:2", "Eph 5:8-11", "Heb 12:1", "1 Peter 5:9", "1 Cor 11:1", "Phil 2:29", "Joshua 4:4-7", "2 Tim 1:13-14", "Matt 26:6-13", "Romans 12:11", "2 Cor 11:23-29", "2 Tim 4:6-7", "Matt 6:19-20", "2 Cor 8:2-3", "2 Cor 9:6-7", "Acts 20:34-35", "Col 3:23-24", "Romans 12:5", "Gal 6:2", "Heb 3:13", "Acts 2:44-46", "Acts 20:18", "Romans 12:13", "Acts 20:20", "31", "Romans 16:3-13", "Eph 4:15", "Heb 10:24-25", "Ezra 7:10", "1 Tim 4:13", "2 Tim 4:2", "1 Peter 2:2", "Romans 12:2", "Col 1:16", "Eph 4:17-18", "2 Cor 10:5", "1 Peter 3:15", "Acts 26:25", "Exodus 35:10", "Romans 12:6-8", "1 Cor 14:12", "1 Peter 4:10", "Matt 28:19-20", "Col 1:28-29", "2 Tim 2:2", "Eph 4:11-13", "Acts 11:20", "Acts 13:2-3", "2 Tim 2:2", "Ezekiel 34:16", "Matt 9:36-38", "Matt 18:14", "Luke 19:10", "Acts 1:8", "1 Cor 9:22-23", "Matt 18:5", "Matt 25:40", "James 1:27"];
+var core_values_verses = [{"Psalm 119:105": "\nCONNECTING WITH GOD\nThe Bible as God\u2019s word and as our highest authority"}, {"2 Tim 3:16-17": "\nCONNECTING WITH GOD\nThe Bible as God\u2019s word and as our highest authority"}, {"1 Tim 4:13-16": "\nCONNECTING WITH GOD\nBeing faithful in spiritual disciplines"}, {"Psalm 1:2": "\nCONNECTING WITH GOD\nBeing faithful in spiritual disciplines"}, {"2 Tim 2:15": "\nCONNECTING WITH GOD\nBeing faithful in spiritual disciplines"}, {"Eph 2:8-9": "\nCONNECTING WITH GOD\nPersonally experiencing and testifying to God\u2019s saving grace"}, {"1 John 1:2-3": "\nCONNECTING WITH GOD\nPersonally experiencing and testifying to God\u2019s saving grace"}, {"Acts 26:29": "\nCONNECTING WITH GOD\nPersonally experiencing and testifying to God\u2019s saving grace"}, {"1 Thess 5:16-18": "\nCONNECTING WITH GOD\nDepending on God through prayer"}, {"Phil 4:6": "\nCONNECTING WITH GOD\nDepending on God through prayer"}, {"Eph 6:18": "\nCONNECTING WITH GOD\nDepending on God through prayer"}, {"1 Cor 10:31": "\nCONNECTING WITH GOD\nDoing all that we do as acts of worship unto God"}, {"1 Cor 15:58": "\nCONNECTING WITH GOD\nDoing all that we do as acts of worship unto God"}, {"Romans 12:1": "\nCONNECTING WITH GOD\nDoing all that we do as acts of worship unto God"}, {"Matt 5:16": "\nGROWING UP\nMaturing in godly character"}, {"1 Tim 4:7-8": "\nGROWING UP\nMaturing in godly character"}, {"Romans 13:14": "\nGROWING UP\nMaturing in godly character"}, {"Gal 5:13-14": "\nGROWING UP\nGrowing in love and service for others"}, {"Eph 5:1-2": "\nGROWING UP\nGrowing in love and service for others"}, {"1 John 3:18": "\nGROWING UP\nGrowing in love and service for others"}, {"Eph 4:11-13": "\nGROWING UP\nEmbracing the role of spiritual leaders for discipleship"}, {"2 Tim 2:2": "\nGROWING UP\nEmbracing the role of spiritual leaders for discipleship"}, {"Heb 13:7": "\nGROWING UP\nEmbracing the role of spiritual leaders for discipleship"}, {"Heb 13:17": "\nGROWING UP\nEmbracing the role of spiritual leaders for discipleship"}, {"Matt 28:18-20": "\nGROWING UP\nEmbracing the role of spiritual leaders for discipleship"}, {"James 2:17": "\nLIVING IT OUT\nLiving out scriptural values and mandates in all areas of life"}, {"1 John 5:2-3": "\nLIVING IT OUT\nLiving out scriptural values and mandates in all areas of life"}, {"Luke 9:57-62": "\nLIVING IT OUT\nLiving out scriptural values and mandates in all areas of life"}, {"Luke 14:25-27": "\nLIVING IT OUT\nLiving out scriptural values and mandates in all areas of life"}, {"1 Cor 10:31": "\nLIVING IT OUT\nLiving out scriptural values and mandates in all areas of life"}, {"Acts 2:46-47": "\nLIVING IT OUT\nForming a biblical, countercultural community"}, {"Romans 12:2": "\nLIVING IT OUT\nForming a biblical, countercultural community"}, {"Eph 5:8-11": "\nLIVING IT OUT\nForming a biblical, countercultural community"}, {"Heb 12:1": "\nLIVING IT OUT\nHonoring and emulating exemplary Christians \u2013 historical and contemporary"}, {"1 Peter 5:9": "\nLIVING IT OUT\nHonoring and emulating exemplary Christians \u2013 historical and contemporary"}, {"1 Cor 11:1": "\nLIVING IT OUT\nHonoring and emulating exemplary Christians \u2013 historical and contemporary"}, {"Phil 2:29": "\nLIVING IT OUT\nHonoring and emulating exemplary Christians \u2013 historical and contemporary"}, {"Joshua 4:4-7": "\nLIVING IT OUT\nLeaving a spiritual legacy for the next generation"}, {"2 Tim 1:13-14": "\nLIVING IT OUT\nLeaving a spiritual legacy for the next generation"}, {"Matt 26:6-13": "\nGIVING IT ALL\nLiving a passionate and sacrificial life"}, {"Romans 12:11": "\nGIVING IT ALL\nLiving a passionate and sacrificial life"}, {"2 Cor 11:23-29": "\nGIVING IT ALL\nLiving a passionate and sacrificial life"}, {"2 Tim 4:6-7": "\nGIVING IT ALL\nLiving a passionate and sacrificial life"}, {"Matt 6:19-20": "\nGIVING IT ALL\nGenerosity in giving time, money, talent and energy"}, {"2 Cor 8:2-3": "\nGIVING IT ALL\nGenerosity in giving time, money, talent and energy"}, {"2 Cor 9:6-7": "\nGIVING IT ALL\nGenerosity in giving time, money, talent and energy"}, {"Acts 20:34-35": "\nGIVING IT ALL\nWorking hard and doing our best"}, {"Col 3:23-24": "\nGIVING IT ALL\nWorking hard and doing our best"}, {"Romans 12:5": "\nGETTING CLOSE\nDoing life together in all its ups and downs"}, {"Gal 6:2": "\nGETTING CLOSE\nDoing life together in all its ups and downs"}, {"Heb 3:13": "\nGETTING CLOSE\nDoing life together in all its ups and downs"}, {"Acts 2:44-46": "\nGETTING CLOSE\nHaving open homes and open lives"}, {"Acts 20:18": "\nGETTING CLOSE\nHaving open homes and open lives"}, {"Romans 12:13": "\nGETTING CLOSE\nHaving open homes and open lives"}, {"Acts 20:20": "\nGETTING CLOSE\nRelating to each other in love, covenantal commitment and honesty"}, {"31": "\nGETTING CLOSE\nRelating to each other in love, covenantal commitment and honesty"}, {"Romans 16:3-13": "\nGETTING CLOSE\nRelating to each other in love, covenantal commitment and honesty"}, {"Eph 4:15": "\nGETTING CLOSE\nRelating to each other in love, covenantal commitment and honesty"}, {"Heb 10:24-25": "\nGETTING CLOSE\nRelating to each other in love, covenantal commitment and honesty"}, {"Ezra 7:10": "\nTRAINING UP\nKnowing and studying the word of God"}, {"1 Tim 4:13": "\nTRAINING UP\nKnowing and studying the word of God"}, {"2 Tim 4:2": "\nTRAINING UP\nKnowing and studying the word of God"}, {"1 Peter 2:2": "\nTRAINING UP\nKnowing and studying the word of God"}, {"Romans 12:2": "\nTRAINING UP\nTraining our minds to think from a Christian perspective in all areas of life"}, {"Col 1:16": "\nTRAINING UP\nTraining our minds to think from a Christian perspective in all areas of life"}, {"Eph 4:17-18": "\nTRAINING UP\nTraining our minds to think from a Christian perspective in all areas of life"}, {"2 Cor 10:5": "\nTRAINING UP\nTraining our minds to think from a Christian perspective in all areas of life"}, {"1 Peter 3:15": "\nTRAINING UP\nBeing able to articulate our faith"}, {"Acts 26:25": "\nTRAINING UP\nBeing able to articulate our faith"}, {"Exodus 35:10": "\nTRAINING UP\nDeveloping our gifts and skills"}, {"Romans 12:6-8": "\nTRAINING UP\nDeveloping our gifts and skills"}, {"1 Cor 14:12": "\nTRAINING UP\nDeveloping our gifts and skills"}, {"1 Peter 4:10": "\nTRAINING UP\nDeveloping our gifts and skills"}, {"Matt 28:19-20": "\nTRAINING UP\nRaising up leaders and ministers"}, {"Col 1:28-29": "\nTRAINING UP\nRaising up leaders and ministers"}, {"2 Tim 2:2": "\nTRAINING UP\nRaising up leaders and ministers"}, {"Eph 4:11-13": "\nTRAINING UP\nRaising up leaders and ministers"}, {"Acts 11:20": "\nREACHING OUT\nEquipping and sending out church planting teams"}, {"Acts 13:2-3": "\nREACHING OUT\nEquipping and sending out church planting teams"}, {"2 Tim 2:2": "\nREACHING OUT\nEquipping and sending out church planting teams"}, {"Ezekiel 34:16": "\nREACHING OUT\nSharing God\u2019s heart for the lost"}, {"Matt 9:36-38": "\nREACHING OUT\nSharing God\u2019s heart for the lost"}, {"Matt 18:14": "\nREACHING OUT\nSharing God\u2019s heart for the lost"}, {"Luke 19:10": "\nREACHING OUT\nSharing God\u2019s heart for the lost"}, {"Acts 1:8": "\nREACHING OUT\nCreative and effective evangelism here and abroad"}, {"1 Cor 9:22-23": "\nREACHING OUT\nCreative and effective evangelism here and abroad"}, {"Matt 18:5": "\nREACHING OUT\nCompassionate service to the needy"}, {"Matt 25:40": "\nREACHING OUT\nCompassionate service to the needy"}, {"James 1:27": "\nREACHING OUT\nCompassionate service to the needy"}]
 
 //Add last chunk of passage based on group
 //Add rate limit based on time
@@ -120,6 +120,29 @@ function sendPassages(error, response, body, group_id) {
     var obj = JSON.parse(body);
     returnVerse = obj.passages.join();
     returnVerse += obj.canonical;
+    console.log(returnVerse);
+    while (returnVerse.length > 1000) {
+      last_index = 1000;
+      while (!/\s/.test(returnVerse.charAt(last_index)) && last_index > 0) {
+        last_index --;
+      }
+      rest_of_passage_dict[group_id].push(returnVerse.substr(0, last_index));
+      returnVerse = returnVerse.substr(last_index);
+    }
+    rest_of_passage_dict[group_id].push(returnVerse);
+    last_chunk_dict[group_id] = rest_of_passage_dict[group_id].shift();
+    postMessageVerse(last_chunk_dict[group_id], group_id);
+  } else {
+    postMessageErr("Error sending passage " + error);
+  };
+}
+
+function sendCoreValue(error, response, body, group_id) {
+  if (!error && response.statusCode == 200) {
+    var obj = JSON.parse(body);
+    returnVerse = obj.passages.join();
+    returnVerse += obj.canonical;
+    returnVerse += core_values_verses[obj.query]
     console.log(returnVerse);
     while (returnVerse.length > 1000) {
       last_index = 1000;
@@ -280,6 +303,41 @@ function getProverbPassage(group_id) {
   };
 
   function curry(error, response, body) {return sendProverb(error, response, body, group_id)};
+
+  request(options, curry);
+}
+
+function getCoreValuepassage(core_value, group_id) {
+  returnVerse = "";
+  var passage;
+  for (var p in core_value) {
+    passage = p;
+  }
+
+  body = {
+    "q": passage,
+    "include-headings": false,
+    "include-footnotes": false,
+    "include-verse-numbers": false,
+    "include-short-copyright": false,
+    "include-passage-references": false
+  };
+
+  var url = "/v3/passage/text/?";
+  url += Object.keys(body).map(function(k) {
+    return encodeURIComponent(k) + "=" + encodeURIComponent(body[k])
+  }).join("&");
+
+
+  options = {
+    url: "https://api.esv.org/v3/passage/text/",
+    headers: {
+     "Authorization": "Token " + crosswayAPIToken
+    },
+    qs: body,
+  };
+
+  function curry(error, response, body) {return sendPassages(error, response, body, group_id)};
 
   request(options, curry);
 }
