@@ -143,7 +143,7 @@ function sendCoreValue(error, response, body, group_id, headers) {
     var obj = JSON.parse(body);
     returnVerse = obj.passages.join();
     returnVerse += obj.canonical;
-    returnVerse += headers;
+    returnVerse = headers + returnVerse;
     console.log(headers);
     console.log(returnVerse);
     while (returnVerse.length > 1000) {
