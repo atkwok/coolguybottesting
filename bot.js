@@ -312,6 +312,7 @@ function getCoreValuepassage(core_value, group_id) {
   returnVerse = "";
   var passage = core_value[0];
   var headers = core_value[1];
+  console.log(core_value);
   console.log(headers);
 
   body = {
