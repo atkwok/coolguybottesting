@@ -313,6 +313,8 @@ function getCoreValuepassage(core_value, group_id) {
   var passage = core_value[0];
   var headers = core_value[1];
   console.log(core_value);
+  console.log("Hi");
+  console.log(core_value.length);
   console.log(headers);
 
   body = {
@@ -372,10 +374,6 @@ function getESVpassage(passage, group_id) {
   function curry(error, response, body) {return sendPassages(error, response, body, group_id)};
 
   request(options, curry);
-}
-
-function splitText(text) {
-  
 }
 
 function postMessageVerse(passagetext, group_id) {
