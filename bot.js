@@ -54,6 +54,7 @@ var core_values_verses = [["Psalm 119:105", "CONNECTING WITH GOD\nThe Bible as G
 //ADd better word breaks for paginating posts
 
 function respond() {
+  console.log("Request received");
   var request = JSON.parse(this.req.chunks[0]),
       verseRegex = /^\/verse.*$/i,
       helpRegex = /^\/h(elp)?\s?$/i,
@@ -67,6 +68,7 @@ function respond() {
   // console.log(this.req);
   var today = new Date();
   if (today.getDay() == 0 || today.getHours() >= 23 || today.getHours <= 5) {
+    console.log("SABBATH");
     this.res.writeHead(200);
     this.res.end();
     return;
