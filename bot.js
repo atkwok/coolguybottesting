@@ -96,7 +96,6 @@ function respond() {
      getESVpassage(randItem(romans_memory_verses), request.group_id);
      this.res.end();
    } else if (coreValueRegex.test(request.text)) {
-    console.log("hi");
     this.res.writeHead(200);
      getCoreValuePassage(randItem(core_values_verses), request.group_id);
      this.res.end();
@@ -110,7 +109,7 @@ function respond() {
      this.res.end();
    } else if (helpRegex.test(request.text)) {
     this.res.writeHead(200);
-     postMessageVerse(help_messagep, request.group_id);
+     postMessageVerse(help_message, request.group_id);
      this.res.end();
    } else if (rest_of_passage_dict[request.group_id].length > 0 && request.text === last_chunk_dict[request.group_id]) {
      this.res.writeHead(200);
