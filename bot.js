@@ -66,9 +66,13 @@ function respond() {
       hangoutRegex = /^\/hangout\s?$/i;
 
   // console.log(this.req);
-  var today = new Date();
+  var date = new Date();
+  var utcDate = new Date(date.toUTCString());
+  utcDate.setHours(utcDate.getHours()-8);
+  var today = new Date(utcDate);
   if (today.getDay() == 0 || today.getHours() >= 23 || today.getHours <= 5) {
     console.log("SABBATH");
+    console.log(today.getHours());
     this.res.writeHead(200);
     this.res.end();
     return;
