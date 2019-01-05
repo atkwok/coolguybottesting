@@ -2,7 +2,7 @@ var HTTPS = require("https");
 var cool = require("cool-ascii-faces");
 const request = require("request");
 
-var DEV_MODE = false;
+var DEV_MODE = true;
 const TEST_GROUP_ID = "44506327"
 
 var botID = process.env.TEST_ID;
@@ -236,7 +236,7 @@ function getDTpassage(group_id) {
     url: "http://gracepoint-berkeley-devotions.org/daily-devotion-text/"
   };
   // var passageRegex = /2018-10-08(?:.|\n)*?Bible Text.*>(.*?)\(ESV\)/gmi
-  var passageRegex = /Bible Text.*>(.*?)\(ESV\)/gmi;
+  var passageRegex = /^\s*<strong> ?([a-zA-Z0-9 :-]+)\(ESV\)/gmi;
   // var passageRe = new RegExp(dateString() + "(?:.|\\n)*?Bible Text.*>(.*?)\\(ESV\\)", "gmi");
   // var passageRegex = /2018-10-08/gm
 
