@@ -83,30 +83,37 @@ function respond() {
       null,
       process.env.GOOGLE_PRIVATE_KEY,
       scopes
-    )
+    );
 
-    jwtClient.authorize(function (err, tokens) {
+    console.log(process.env.GOOGLE_CLIENT_EMAIL);
+
+    console.log("Created JWT Client")
+
+    jwtClient.authorize((err, tokens) => {
      if (err) {
+       console.log("ERRRORRR AKJSDKFLAJLKSDJLKJ")
        console.log(err);
        return;
      } else {
        console.log("Successfully connected!");
+       const calendar = google.calendar({version: 'v3'});
+       console.log(calendar);
+
+         console.log(calendar.events.list({
+          calendarId: 'primary',
+          timeMin: (new Date()).toISOString(),
+          maxResults: 10,
+          singleEvents: true,
+          orderBy: 'startTime',
+         }));
+       var event = calendar.events.quickAdd({calendarId: "primary", text: request.text.substr(6)});
+       console.log(event);
+       postMessageVerse('Event ID: ' + event.getId(), request.group_id);
+       this.res.end();
      }
     });
 
-     const calendar = google.calendar({version: 'v3', auth: jwtClient});
-
-       console.log(calendar.events.list({
-        calendarId: 'primary',
-        timeMin: (new Date()).toISOString(),
-        maxResults: 10,
-        singleEvents: true,
-        orderBy: 'startTime',
-       }));
-     var event = calendar.events.quickAdd({calendarId: "primary", text: request.text.substr(6)});
-     console.log(event);
-     postMessageVerse('Event ID: ' + event.getId(), request.group_id);
-     this.res.end();
+     
      return;
   }
 
