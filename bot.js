@@ -77,6 +77,7 @@ function respond() {
 
   if (request.text && request.group_id === "44506327" && eventRegex.test(request.text)) {
     this.res.writeHead(200);
+     var calendar = google.calendar('v3');
      postMessageVerse(help_message, request.group_id);
      this.res.end();
      return;
