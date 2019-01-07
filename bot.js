@@ -3,7 +3,7 @@ var cool = require("cool-ascii-faces");
 const request = require("request");
 var fs = require('fs');
 var readline = require('readline');
-var google = require('googleapis');
+var {google} = require('googleapis');
 
 var DEV_MODE = false;
 const TEST_GROUP_ID = "44506327"
@@ -77,7 +77,24 @@ function respond() {
 
   if (request.text && request.group_id === "44506327" && eventRegex.test(request.text)) {
     this.res.writeHead(200);
-     var calendar = google.calendar('v3');
+    const scopes = 'https://www.googleapis.com/auth/calendar'
+    const jwt = new google.auth.JWT(
+      process.env.GOOGLE_CLIENT_EMAIL,
+      null,
+      process.env.GOOGLE_PRIVATE_KEY,
+      scopes
+    )
+
+    jwtClient.authorize(function (err, tokens) {
+     if (err) {
+       console.log(err);
+       return;
+     } else {
+       console.log("Successfully connected!");
+     }
+    });
+
+     var calendar = google.calendar({version: 'v3', {"auth": jwtClient});
      postMessageVerse(help_message, request.group_id);
      this.res.end();
      return;

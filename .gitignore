@@ -3,3 +3,4 @@ node_modules
 .backupenvs
 *.txt
 quickscript.py
+*.json
