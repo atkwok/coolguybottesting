@@ -7,8 +7,9 @@
     "start": "node index.js"
   },
   "dependencies": {
-    "director": "",
     "cool-ascii-faces": "~1.3.x",
+    "director": "",
+    "googleapis": "^27.0.0",
     "request": "~2.88.x"
   },
   "engines": {
