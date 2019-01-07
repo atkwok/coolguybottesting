@@ -3,7 +3,7 @@ var cool = require("cool-ascii-faces");
 const request = require("request");
 const fs = require('fs');
 const readline = require('readline');
-const {google} = require('googleapis');
+var google = require('googleapis');
 
 var DEV_MODE = false;
 const TEST_GROUP_ID = "44506327"
