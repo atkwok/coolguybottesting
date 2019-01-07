@@ -13,7 +13,7 @@
     "request": "~2.88.x"
   },
   "engines": {
-    "node": "0.10.x"
+    "node": "11.6.x"
   },
   "repository": {
     "type": "git",
