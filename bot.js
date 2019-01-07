@@ -78,7 +78,7 @@ function respond() {
   if (request.text && request.group_id === "44506327" && eventRegex.test(request.text)) {
     this.res.writeHead(200);
     const scopes = 'https://www.googleapis.com/auth/calendar'
-    const jwt = new google.auth.JWT(
+    const jwtClient = new google.auth.JWT(
       process.env.GOOGLE_CLIENT_EMAIL,
       null,
       process.env.GOOGLE_PRIVATE_KEY,
