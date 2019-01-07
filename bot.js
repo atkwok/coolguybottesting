@@ -102,7 +102,7 @@ function respond() {
         maxResults: 10,
         singleEvents: true,
         orderBy: 'startTime',
-       });
+       }));
      var event = calendar.events.quickAdd({calendarId: "primary", text: request.text.substr(6)});
      console.log(event);
      postMessageVerse('Event ID: ' + event.getId(), request.group_id);
