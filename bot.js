@@ -95,7 +95,7 @@ function respond() {
     });
 
      var calendar = google.calendar({version: 'v3', auth: jwtClient});
-     var event = calendar.createEventFromDescription(request.text);
+     var event = calendar.getDefaultCalendar().createEventFromDescription(request.text);
      postMessageVerse('Event ID: ' + event.getId(), request.group_id);
      this.res.end();
      return;
