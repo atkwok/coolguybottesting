@@ -95,7 +95,7 @@ function respond() {
     });
 
      const calendar = google.calendar({version: 'v3', auth: jwtClient});
-     var event = calendar.events.quickAdd(request.text);
+     var event = calendar.events.quickAdd(calendarId: "primary", text: request.text);
      postMessageVerse('Event ID: ' + event.getId(), request.group_id);
      this.res.end();
      return;
