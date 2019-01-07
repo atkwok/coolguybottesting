@@ -1,8 +1,8 @@
 var HTTPS = require("https");
 var cool = require("cool-ascii-faces");
 const request = require("request");
-const fs = require('fs');
-const readline = require('readline');
+var fs = require('fs');
+var readline = require('readline');
 var google = require('googleapis');
 
 var DEV_MODE = false;
