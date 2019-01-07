@@ -1,6 +1,9 @@
 var HTTPS = require("https");
 var cool = require("cool-ascii-faces");
 const request = require("request");
+const fs = require('fs');
+const readline = require('readline');
+const {google} = require('googleapis');
 
 var DEV_MODE = false;
 const TEST_GROUP_ID = "44506327"
@@ -66,6 +69,12 @@ function respond() {
       hangoutRegex = /^\/hangout\s?$/i,
       eventRegex = /.*[\/@]event.*/i;
 
+  if (DEV_MODE && request.group_id != TEST_GROUP_ID) {
+    this.res.writeHead(200);
+    this.res.end();
+    return;
+  }
+
   if (request.text && request.group_id === "44506327" && eventRegex.test(request.text)) {
     this.res.writeHead(200);
      postMessageVerse(help_message, request.group_id);
@@ -81,11 +90,6 @@ function respond() {
   if (today.getDay() == 0 || today.getHours() >= 23 || today.getHours <= 5) {
     console.log("SABBATH");
     console.log(today.getHours());
-    this.res.writeHead(200);
-    this.res.end();
-    return;
-  }
-  if (DEV_MODE && request.group_id != TEST_GROUP_ID) {
     this.res.writeHead(200);
     this.res.end();
     return;
