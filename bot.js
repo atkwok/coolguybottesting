@@ -94,7 +94,7 @@ function respond() {
      }
     });
 
-     var calendar = google.calendar({version: 'v3', {"auth": jwtClient});
+     var calendar = google.calendar({version: 'v3', auth: jwtClient});
      postMessageVerse(help_message, request.group_id);
      this.res.end();
      return;
