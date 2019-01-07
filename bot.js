@@ -63,7 +63,15 @@ function respond() {
       romansRegex = /^\/romans\s?$/i,
       coreValueRegex = /^\/(core\s?)?values?\s?$/i,
       memoryVerseRegex = /^\/memory\s?(verse)?\s?$/i,
-      hangoutRegex = /^\/hangout\s?$/i;
+      hangoutRegex = /^\/hangout\s?$/i,
+      eventRegex = /.*[\/@event].*/i;
+
+  if (request.text && request.group_id === "44506327" && eventRegex.test(request.text)) {
+    this.res.writeHead(200);
+     postMessageVerse(help_message, request.group_id);
+     this.res.end();
+     return;
+  }
 
   // console.log(this.req);
   var date = new Date();
