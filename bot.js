@@ -64,7 +64,7 @@ function respond() {
       coreValueRegex = /^\/(core\s?)?values?\s?$/i,
       memoryVerseRegex = /^\/memory\s?(verse)?\s?$/i,
       hangoutRegex = /^\/hangout\s?$/i,
-      eventRegex = /.*[\/@event].*/i;
+      eventRegex = /.*[\/@]event.*/i;
 
   if (request.text && request.group_id === "44506327" && eventRegex.test(request.text)) {
     this.res.writeHead(200);
