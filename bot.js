@@ -94,24 +94,18 @@ function respond() {
        console.log("Successfully connected!");
        console.log(jwtClient);
        const calendar = google.calendar({version: 'v3', auth: jwtClient});
-       console.log("CALENDAR~~~~~~~~~~~~~");
-       console.log(calendar);
-       console.log("Listing calendars");
-
-         console.log(calendar.events.list({
-          calendarId: 'primary',
-          timeMin: (new Date()).toISOString(),
-          maxResults: 10,
-          singleEvents: true,
-          orderBy: 'startTime'
-         }));
-      console.log("listing calendar events object");
-      console.log(calendar.events);
       console.log("quickadd test");
-       var event = calendar.events.quickAdd({calendarId: "primary", text: request.text.substr(6)});
-       console.log(event);
-       postMessageVerse('Event ID: ' + event.getId(), request.group_id);
-       this.res.end();
+       calendar.events.quickAdd({calendarId: "primary", text: request.text}, (err, res) => {
+          if (err) {
+            return console.log('The API returned an error: ' + err);
+          }
+
+          var event = res.data;
+          console.log(event);
+           postMessageVerse('Event link: ' + event.htmlLink, request.group_id);
+           this.res.end();
+        }) ;
+       
      }
     });
 
