@@ -93,7 +93,7 @@ function respond() {
      } else {
        console.log("Successfully connected!");
        const calendar = google.calendar({version: 'v3'});
-       console.log(calendar);
+       console.log("Listing calendars");
 
          console.log(calendar.events.list({
           calendarId: 'primary',
@@ -103,6 +103,7 @@ function respond() {
           orderBy: 'startTime',
           auth: jwtClient,
          }));
+      console.log("quickadd test");
        var event = calendar.events.quickAdd({calendarId: "primary", text: request.text.substr(6), auth: jwtClient});
        console.log(event);
        postMessageVerse('Event ID: ' + event.getId(), request.group_id);
