@@ -103,11 +103,12 @@ function respond() {
           timeMin: (new Date()).toISOString(),
           maxResults: 10,
           singleEvents: true,
-          orderBy: 'startTime',
-          auth: jwtClient,
+          orderBy: 'startTime'
          }));
+      console.log("listing calendar events object");
+      console.log(calendar.events);
       console.log("quickadd test");
-       var event = calendar.events.quickAdd({calendarId: "primary", text: request.text.substr(6), auth: jwtClient});
+       var event = calendar.events.quickAdd({calendarId: "primary", text: request.text.substr(6)});
        console.log(event);
        postMessageVerse('Event ID: ' + event.getId(), request.group_id);
        this.res.end();
