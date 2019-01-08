@@ -92,7 +92,7 @@ function respond() {
        return;
      } else {
        console.log("Successfully connected!");
-       const calendar = google.calendar({version: 'v3'});
+       const calendar = google.calendar({version: 'v3', auth: jwtClient});
        console.log("Listing calendars");
 
          console.log(calendar.events.list({
