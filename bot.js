@@ -85,10 +85,6 @@ function respond() {
       scopes
     );
 
-    console.log(process.env.GOOGLE_CLIENT_EMAIL);
-
-    console.log("Created JWT Client")
-
     jwtClient.authorize((err, tokens) => {
      if (err) {
        console.log("ERRRORRR AKJSDKFLAJLKSDJLKJ")
