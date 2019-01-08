@@ -101,8 +101,9 @@ function respond() {
           maxResults: 10,
           singleEvents: true,
           orderBy: 'startTime',
+          auth: jwtClient,
          }));
-       var event = calendar.events.quickAdd({calendarId: "primary", text: request.text.substr(6)});
+       var event = calendar.events.quickAdd({calendarId: "primary", text: request.text.substr(6), auth: jwtClient});
        console.log(event);
        postMessageVerse('Event ID: ' + event.getId(), request.group_id);
        this.res.end();
